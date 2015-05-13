@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ForGen
 {
-	class Automata
+	class Automata : System.Collections.IComparer
     {
         public Automata()
         {
