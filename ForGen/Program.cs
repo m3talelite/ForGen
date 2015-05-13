@@ -11,8 +11,7 @@ namespace ForGen
         static void Main(string[] args)
         {
 
-
-            //Prevent from ending
+			Console.WriteLine("Hello");
             Console.ReadLine();
         }
     }

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ForGen
 {
-    class Automata : System.Collections.IComparer
+	class Automata
     {
         public Automata()
         {
@@ -18,7 +18,7 @@ namespace ForGen
 
         }
 
-        public Automata(OrderedSet<char> set)
+		public Automata(SortedSet<char> set)
         {
 
         }
