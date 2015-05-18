@@ -8,20 +8,28 @@ namespace ForGen
 {
 	class Automata : System.Collections.IComparer
     {
-        public Automata()
+//        private List<Transition<T>> transitions;
+
+        public Automata(): base()
+        {
+            new Automata(new SortedSet<char>());
+        }
+
+        public Automata(char[] s): base()
+        {
+            new Automata(new SortedSet<char>(s.ToList()) );
+        }
+
+		public Automata(SortedSet<char> set): base()
         {
 
         }
 
-        public Automata(char[] s)
+        public int Compare(object arg0, object arg1)
         {
-
+            return 0;
         }
 
-		public Automata(SortedSet<char> set)
-        {
-
-        }
 
     }
 }
