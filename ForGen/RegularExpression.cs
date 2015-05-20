@@ -14,6 +14,7 @@ namespace ForGen
         ONE
     }
 
+
     class RegularExpression
     {
         Operator operate;
@@ -68,6 +69,44 @@ namespace ForGen
             return result;
         }
 
+        public SortedSet<string> getLanguage(int maximumSteps)
+        {
+            //TODO: Make the get language from the regExp
+            CompareByLength compareByLength = new CompareByLength();
+            SortedSet<string> emptyLanguage = new SortedSet<string>(compareByLength);
+            SortedSet<string> resultLanguage = new SortedSet<string>(compareByLength);
 
+            SortedSet<string> leftLanguage, rightLanguage;
+
+            if (maximumSteps < 1)
+                return emptyLanguage;
+            switch (this.operate)
+            {
+                case Operator.ONE:
+                    resultLanguage.Add(terminal);
+                    break;
+                case Operator.OR:
+                    break;
+                case Operator.DOT:
+                    break;
+                case Operator.STAR:
+                    break;
+                case Operator.PLUS:
+                    break;
+                default:
+                    break;
+            }
+            return resultLanguage;
+        }
+    }
+
+    public class CompareByLength : IComparer<string>
+    {
+        public int Compare(string arg0, string arg1)
+        {
+            if (arg0.Length == arg1.Length)
+                return arg0.CompareTo(arg1);
+            return arg0.Length - arg1.Length;
+        }
     }
 }
