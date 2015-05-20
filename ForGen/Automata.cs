@@ -9,10 +9,14 @@ namespace ForGen
 	class Automata : System.Collections.IComparer
     {
 //        private List<Transition<T>> transitions;
+//        private SortedSet<T> states;
+//        private SortedSet<T> startStates;
+//        private SortedSet<T> finalStates;
+//        private SortedSet<char> symbols;
 
         public Automata(): base()
         {
-            new Automata(new SortedSet<char>());
+           
         }
 
         public Automata(char[] s): base()
@@ -22,7 +26,7 @@ namespace ForGen
 
 		public Automata(SortedSet<char> set): base()
         {
-
+//            transitions = new 
         }
 
         public int Compare(object arg0, object arg1)

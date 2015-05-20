@@ -11,23 +11,26 @@ namespace ForGen
     {
         public static readonly char EPSILON = '$';
 
-        private T fromState {get; set;} 
-        private char symbol;
-        private T toState;
+        private Transition<T> fromState {get; set;}
+        private char symbol {get; set;}
+        private Transition<T> toState {get; set;}
 
-        public Transition(T fromOrTo, char s): base()
+        public Transition(Transition<T> fromOrTo, char s)
+            : base()
         {
             this.fromState = fromOrTo;
             this.symbol = s;
             this.toState = fromOrTo;
         }
-        public Transition(T from, T to): base()
+        public Transition(Transition<T> from, Transition<T> to)
+            : base()
         {
             this.fromState = from;
             this.symbol = EPSILON;
             this.toState = to;
         }
-        public Transition(T from, char s, T to): base()
+        public Transition(Transition<T> from, char s, Transition<T> to)
+            : base()
         {
             this.fromState = from;
             this.symbol = s;
@@ -51,7 +54,11 @@ namespace ForGen
 
         public int CompareTo(Transition<T> arg0)
         {
-            return 0;
+            int fromCompare = fromState.CompareTo(arg0.fromState);
+            int symbolCompare = symbol.CompareTo(arg0.symbol);
+            int toCompare = toState.CompareTo(arg0.toState);
+
+            return (fromCompare != 0 ? fromCompare : (symbolCompare != 0 ? symbolCompare : toCompare));
         }
 
         public override int GetHashCode()
@@ -59,5 +66,9 @@ namespace ForGen
             return base.GetHashCode();
         }
 
+        public override string ToString()
+        {
+            return "(" + this.fromState + ", " + this.symbol + ") -->" + this.toState;
+        }
     }
 }
