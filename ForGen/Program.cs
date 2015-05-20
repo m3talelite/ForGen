@@ -11,8 +11,10 @@ namespace ForGen
         static void Main(string[] args)
         {
 
-			Console.WriteLine("Hello");
+			Console.WriteLine("Programme started on "+DateTime.Now.ToString("H:mm:ss"));
             Console.ReadLine();
+			Console.WriteLine("Programme successfully stopped on "+DateTime.Now.ToString("H:mm:ss"));
+
         }
     }
 }
