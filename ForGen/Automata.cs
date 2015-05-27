@@ -6,198 +6,96 @@ using System.Threading.Tasks;
 
 namespace ForGen
 {
-	class Automata : System.Collections.IComparer
-    {
-//        private List<Transition<T>> transitions;
-//        private SortedSet<T> states;
-//        private SortedSet<T> startStates;
-//        private SortedSet<T> finalStates;
-//        private SortedSet<char> symbols;
+	public class Automata<T> where T : IComparable
+	{
+		private List<Transition<T>> transitions;
+		private SortedSet<T> states;
+		private SortedSet<T> startStates;
+	    private SortedSet<T> finalStates;
+        private SortedSet<char> symbols;
+		 
+		public Automata()
+		{
+			this.transitions = new SortedSet<Transition<T>>().ToList();
+			this.states = new SortedSet<T>();
+			this.startStates = new SortedSet<T>();
+			this.finalStates = new SortedSet<T>();
+			this.setAlphabet(symbols);
+		}
 
-        public Automata(): base()
-        {
-           
-        }
+		public void setAlphabet(char [] s){
+			this.setAlphabet(new SortedSet<char>((s)));
+		}
 
-        public Automata(char[] s): base()
-        {
-            new Automata(new SortedSet<char>(s.ToList()) );
-        }
+		public void setAlphabet(SortedSet<char> symbols){
+			this.symbols = symbols;
+		}
 
-		public Automata(SortedSet<char> set): base()
-        {
-//            transitions = new 
-        }
+		public SortedSet<char> getAlphabet(){
+			return symbols;
+		}
 
-        public int Compare(object arg0, object arg1)
-        {
-            return 0;
-        }
+		/*public void addTransition(Transition<T> t){
+			transitions.Add(t);
+			states.Add(t.getFromState());
+			states.Add(t.getToState());        
+		}*/
 
+		public void defineAsStartState(T t)
+		{
+			// if already in states no problem because a Set will remove duplicates.
+			states.Add(t);
+			startStates.Add(t);        
+		}
+
+		public void defineAsFinalState(T t)
+		{
+			// if already in states no problem because a Set will remove duplicates.
+			states.Add(t);
+			finalStates.Add(t);        
+		}
+
+		public void printTransitions()
+		{
+
+			foreach(Transition<T> t in transitions)
+			{
+				Console.WriteLine(t);
+			}
+		}
+
+		public bool isDFA()
+		{
+			bool isDFA = true;
+
+			foreach(T from in states)
+			{
+				foreach(char symbol in symbols)
+				{
+					isDFA = isDFA && getToStates(from, symbol).Count() == 1;
+				}
+			}
+
+			return isDFA;
+		}
+
+		public SortedSet<T> getToStates(T from, char symbol)
+		{
+			// not yet correct:
+			SortedSet<T> reachable = new SortedSet<T>();
+
+			return reachable;
+
+		}
+
+		public SortedSet<T> epsilonClosure (SortedSet<T> fromStates)
+		{
+			SortedSet<T> reachable = new SortedSet<T>();
+			SortedSet<T> newFound = new SortedSet<T	>();
+
+			// not yet correct:
+			return reachable;
+		}
 
     }
 }
-
-
-//public class Automata<T extends Comparable>
-//{
-
-//    // Or use a Map structure
-//    private Set<Transition <T>> transitions;
-
-//    private SortedSet<T> states;
-//    private SortedSet<T> startStates;
-//    private SortedSet<T> finalStates;
-//    private SortedSet<Character> symbols;
-
-//    public Automata()
-//    {
-//           this(new TreeSet<Character>());
-//    }
-    
-//    public Automata(Character [] s)
-//    {   
-//        this(new TreeSet<Character>(Arrays.asList(s)) );
-//    }
-
-//    public Automata(SortedSet<Character> symbols)
-//    {
-//        transitions = new TreeSet<Transition<T>>();
-//        states = new TreeSet<T>();
-//        startStates = new TreeSet<T>();
-//        finalStates = new TreeSet<T>();
-//        this.setAlphabet(symbols);
-//    }
-    
-//    public void setAlphabet(Character [] s)
-//    {
-//        this.setAlphabet(new TreeSet<Character>(Arrays.asList(s)));
-//    }
-    
-//    public void setAlphabet(SortedSet<Character> symbols)
-//    {
-//       this.symbols = symbols;
-//    }
-    
-//    public SortedSet<Character> getAlphabet()
-//    {
-//       return symbols;
-//    }
-    
-//    public void addTransition(Transition<T> t)
-//    {
-//        transitions.add(t);
-//        states.add(t.getFromState());
-//        states.add(t.getToState());        
-//    }
-    
-//    public void defineAsStartState(T t)
-//    {
-//        // if already in states no problem because a Set will remove duplicates.
-//        states.add(t);
-//        startStates.add(t);        
-//    }
-
-//    public void defineAsFinalState(T t)
-//    {
-//        // if already in states no problem because a Set will remove duplicates.
-//        states.add(t);
-//        finalStates.add(t);        
-//    }
-
-//    public void printTransitions()
-//    {
-
-//        for (Transition<T> t : transitions)
-//        {
-//            System.out.println (t);
-//        }
-//    }
-    
-//    public boolean isDFA()
-//    {
-//        boolean isDFA = true;
-        
-//        for (T from : states)
-//        {
-//            for (char symbol : symbols)
-//            {
-//                isDFA = isDFA && getToStates(from, symbol).size() == 1;
-//            }
-//        }
-        
-//        return isDFA;
-//    }
-  
-//    public SortedSet<T> getToStates(T from, char symbol)
-//    {
-//        // not yet correct:
-//       SortedSet<T> reachable = new TreeSet<T>();
-       
-//       return reachable;
-        
-//    }
-    
-//    public SortedSet<T> epsilonClosure (SortedSet<T> fromStates)
-//    {
-//       SortedSet<T> reachable = new TreeSet<>();
-//       SortedSet<T> newFound = new TreeSet<>();
-       
-//        // not yet correct:
-//       return reachable;
-//    }
-// /*
-//    public SortedSet<T> getToStates(T from, char symbol)
-//    {
-//        SortedSet<T> fromStates = new TreeSet<T>();
-//        fromStates.add(from);
-//        fromStates = epsilonClosure(fromStates);      
-        
-//        SortedSet<T> toStates = new TreeSet<T>();
-
-//        for (T fromState : fromStates)
-//        {
-//            for (Transition<T> t : transitions)
-//            {
-//                if (t.getFromState().equals(fromState) && t.getSymbol() == symbol)
-//                    {
-//                        toStates.add(t.getToState());
-//                    }
-//            }
-//        }
-
-//        return epsilonClosure(toStates);
-//    }
-    
-    
-//    public SortedSet<T> epsilonClosure (SortedSet<T> fromStates)
-//    {
-//       SortedSet<T> reachable = new TreeSet<>();
-//       SortedSet<T> newFound = new TreeSet<>();
-       
-//       do {
-//             reachable.addAll(fromStates);
-            
-//             newFound = new TreeSet<T>();
-//             for (T fromState : fromStates){
-//                 for (Transition<T> t : transitions)
-//                    {
-//                        T toState  = t.getToState();
-//                        if (t.getFromState().equals(fromState) && t.getSymbol() == Transition.EPSILON && !fromStates.contains(toState))
-//                            {
-//                                newFound.add(toState);
-//                            }
-//                    }
-//             }
-             
-//             fromStates.addAll(newFound);
-//             reachable = newFound;
-//        } 
-//        while (! newFound.isEmpty());
-       
-//        return fromStates;
-//    }
-//    */
-    
-   
-//}
