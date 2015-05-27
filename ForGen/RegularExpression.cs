@@ -85,15 +85,38 @@ namespace ForGen
                 case Operator.ONE:
                     resultLanguage.Add(terminal);
                     break;
-                case Operator.OR:
+				case Operator.OR:
+					leftLanguage = (left == null ? emptyLanguage : left.getLanguage (maximumSteps - 1));
+					rightLanguage = (right == null ? emptyLanguage : right.getLanguage (maximumSteps - 1));
+					resultLanguage.UnionWith (leftLanguage);
+					resultLanguage.UnionWith (rightLanguage);
                     break;
-                case Operator.DOT:
+				case Operator.DOT:
+						leftLanguage = (left == null ? emptyLanguage : left.getLanguage (maximumSteps - 1));
+						rightLanguage = (right == null ? emptyLanguage : right.getLanguage (maximumSteps - 1));
+						foreach (string s1 in leftLanguage) {
+							foreach (string s2 in rightLanguage) {
+								resultLanguage.Add (s1 + s2);
+							}
+						}
+	                    break;
+				case Operator.STAR:
+				case Operator.PLUS:
+					leftLanguage = (left == null ? emptyLanguage : left.getLanguage (maximumSteps - 1));
+					resultLanguage.UnionWith (leftLanguage);
+					for (int i = 1; i < maximumSteps; i++) {
+						HashSet<string> tempLanguage = new HashSet<string> (resultLanguage);
+						foreach (string s1 in leftLanguage) {
+							foreach (string s2 in tempLanguage) {
+								resultLanguage.Add (s1 + s2);
+							}
+						}
+					}
+					if (this.operate == Operator.STAR)
+						resultLanguage.Add ("");
                     break;
-                case Operator.STAR:
-                    break;
-                case Operator.PLUS:
-                    break;
-                default:
+			default:
+					System.Diagnostics.Debug.WriteLine ("getLangiage not yet defined for this operator: " + this.operate);
                     break;
             }
             return resultLanguage;
