@@ -116,7 +116,7 @@ namespace ForGen
 						resultLanguage.Add ("");
                     break;
 			default:
-					System.Diagnostics.Debug.WriteLine ("getLangiage is nog niet gedefineerd voor de operator: " + this.operate);
+					System.Diagnostics.Debug.WriteLine ("getLangiage not yet defined for this operator: " + this.operate);
                     break;
             }
             return resultLanguage;
