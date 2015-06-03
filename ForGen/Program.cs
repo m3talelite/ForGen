@@ -12,6 +12,7 @@ namespace ForGen
         {
 
 			Console.WriteLine("Programme started on "+DateTime.Now.ToString("H:mm:ss"));
+            testRegularExpression();
             Console.ReadLine();
 			Console.WriteLine("Programme successfully stopped on "+DateTime.Now.ToString("H:mm:ss"));
 
@@ -76,5 +77,71 @@ namespace ForGen
 //
 //			return m;
 //		}
+
+        public static void testRegularExpression()
+        {
+            RegularExpression exp1, exp2, exp3, exp4, exp5, a, b, all;
+
+            a = new RegularExpression("a");
+            b = new RegularExpression("b");
+            // exp 1 baa
+            exp1 = new RegularExpression("baa");
+            // exp 2 bb
+            exp2 = new RegularExpression("bb");
+            // exp 3 baa | bb
+            exp3 = exp1.or(exp2);
+            //all = (a|b)*
+            all = (a.or(b)).star();
+            // exp 4 (baa | bb)+
+            exp4 = exp3.plus();
+            // exp 4 (baa | bb)+ (a|b)*
+            exp5 = exp4.dot(all);
+
+            #region PRINTREGULAREXPRESSION
+
+            Console.WriteLine("taal van (baa):");
+            foreach (String o in exp1.getLanguage(5))
+            {
+                Console.Write(o + " ");
+            }
+            Console.WriteLine("");
+
+            Console.WriteLine("taal van (bb):");
+            foreach (String o in exp2.getLanguage(5))
+            {
+                Console.Write(o + " ");
+            }
+            Console.WriteLine("");
+
+            Console.WriteLine("taal van (baa | bb):");
+            foreach (String o in exp3.getLanguage(5))
+            {
+                Console.Write(o + " ");
+            }
+            Console.WriteLine("");
+
+            Console.WriteLine("taal van (a|b)*:");
+            foreach (String o in all.getLanguage(5))
+            {
+                Console.Write(o + " ");
+            }
+            Console.WriteLine("");
+
+            Console.WriteLine("taal van (baa | bb)+:");
+            foreach (String o in exp5.getLanguage(5))
+            {
+                Console.Write(o + " ");
+            }
+            Console.WriteLine("");
+
+            Console.WriteLine("taal van (baa | bb)+ (a|b)*:");
+            foreach (String o in exp5.getLanguage(6))
+            {
+                Console.Write(o + " ");
+            }
+            Console.WriteLine("");
+
+            #endregion
+        }
     }
 }
