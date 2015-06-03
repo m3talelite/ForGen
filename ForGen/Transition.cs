@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 namespace ForGen
 {
 
-    class Transition<T> : IComparable<Transition<T>>
-    {
+	public class Transition<T> where T : IComparable    
+	{
         public static readonly char EPSILON = '$';
 
         private Transition<T> fromState {get; set;}
