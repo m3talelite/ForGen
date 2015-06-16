@@ -81,6 +81,19 @@ namespace ForGen
 			}
 		}
 
+		public void printGraphviz(){
+			Console.WriteLine ("digraph finite_state_machine {");
+			Console.WriteLine ("rankdir=q;");
+			Console.WriteLine ("size=\"8,5\"");
+			Console.WriteLine ("node [shape = doublecircle]; LR_0 LR_3 LR_4 LR_8;"); //todo check if endstate
+			Console.WriteLine ("node [shape = circle];"); //todo check if normal state
+			foreach(Transition<T> t in transitions)
+			{
+				Console.WriteLine(t);
+			}
+			Console.WriteLine ("}");
+		}
+
 		public bool isDFA()
 		{
 			bool isDFA = true;

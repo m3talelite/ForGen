@@ -87,7 +87,7 @@ namespace ForGen
 
         public override string ToString()
         {
-            return "(" + this.fromState + ", " + this.symbol + ") -->" + this.toState;
+			return this.fromState + " -> " + this.toState + "[ label = \"" + this.symbol + "\"];";
         }
     }
 }

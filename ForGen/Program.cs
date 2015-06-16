@@ -11,12 +11,12 @@ namespace ForGen
         static void Main(string[] args)
         {
 
-			Console.WriteLine("Programme started on "+DateTime.Now.ToString("H:mm:ss"));
+			Console.WriteLine("Programme started on "+DateTime.Now.ToString("hh:mm:ss.fff"));
             
-		
-			Console.WriteLine(TestProcedure1().getTransistionsNumber());
+			testRegularExpression();
+			TestProcedure1 ().printGraphviz ();
             Console.ReadLine();
-			Console.WriteLine("Programme successfully stopped on "+DateTime.Now.ToString("H:mm:ss"));
+			Console.WriteLine("Programme successfully stopped on "+DateTime.Now.ToString("hh:mm:ss.fff"));
 
         }
 
