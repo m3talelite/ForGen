@@ -23,6 +23,19 @@ namespace ForGen
 			this.setAlphabet(symbols);
 		}
 
+		public Automata(char [] s): this(new SortedSet<char>(s))
+		{   
+		}
+
+		public Automata(SortedSet<char> symbols)
+		{
+			transitions = new List<Transition<T>>();
+			states = new SortedSet<T>();
+			startStates = new SortedSet<T>();
+			finalStates = new SortedSet<T>();
+			this.setAlphabet(symbols);
+		}
+
 		public void setAlphabet(char [] s){
 			this.setAlphabet(new SortedSet<char>((s)));
 		}
@@ -35,17 +48,21 @@ namespace ForGen
 			return symbols;
 		}
 
-		/*public void addTransition(Transition<T> t){
+		public void addTransition(Transition<T> t){
 			transitions.Add(t);
 			states.Add(t.getFromState());
 			states.Add(t.getToState());        
-		}*/
+		}
 
 		public void defineAsStartState(T t)
 		{
 			// if already in states no problem because a Set will remove duplicates.
 			states.Add(t);
 			startStates.Add(t);        
+		}
+
+		public int getTransistionsNumber(){
+			return transitions.Count();       
 		}
 
 		public void defineAsFinalState(T t)

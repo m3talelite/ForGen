@@ -11,25 +11,33 @@ namespace ForGen
 	{
         public static readonly char EPSILON = '$';
 
-        private Transition<T> fromState {get; set;}
-        private char symbol {get; set;}
-        private Transition<T> toState {get; set;}
+		public T fromState{
+			get;
+			private set;
+		}
 
-        public Transition(Transition<T> fromOrTo, char s)
+		public char symbol  {
+			get;
+			private set;
+		}
+
+		public T toState;
+
+        public Transition(T fromOrTo, char s)
             : base()
         {
             this.fromState = fromOrTo;
             this.symbol = s;
             this.toState = fromOrTo;
         }
-        public Transition(Transition<T> from, Transition<T> to)
+        public Transition(T from, T to)
             : base()
         {
             this.fromState = from;
             this.symbol = EPSILON;
             this.toState = to;
         }
-        public Transition(Transition<T> from, char s, Transition<T> to)
+        public Transition(T from, char s, T to)
             : base()
         {
             this.fromState = from;
@@ -51,6 +59,17 @@ namespace ForGen
             }
             return false;       
         }
+
+		public T getToState()
+		{
+			return this.toState;
+		}
+
+		public T getFromState()
+		{
+			return this.fromState;
+		}
+
 
         public int CompareTo(Transition<T> arg0)
         {
