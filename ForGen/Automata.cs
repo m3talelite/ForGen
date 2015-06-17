@@ -111,20 +111,54 @@ namespace ForGen
 
 		public SortedSet<T> getToStates(T from, char symbol)
 		{
-			// not yet correct:
-			SortedSet<T> reachable = new SortedSet<T>();
+			SortedSet<T> fromStates = new SortedSet<T>();
+			fromStates.Add(from);
+			fromStates = epsilonClosure(fromStates);      
 
-			return reachable;
+			SortedSet<T> toStates = new SortedSet<T>();
 
+			foreach(T fromState in fromStates)
+			{
+				foreach(Transition<T> t in transitions)
+				{
+					if (t.getFromState().Equals(fromState) && t.getSymbol() == symbol)
+					{
+						toStates.Add(t.getToState());
+					}
+				}
+			}
+
+			return epsilonClosure(toStates);
 		}
 
 		public SortedSet<T> epsilonClosure (SortedSet<T> fromStates)
 		{
 			SortedSet<T> reachable = new SortedSet<T>();
-			SortedSet<T> newFound = new SortedSet<T	>();
+			SortedSet<T> newFound = new SortedSet<T>();
 
-			// not yet correct:
-			return reachable;
+			do {
+				foreach (var item in fromStates) {
+					reachable.Add(item);
+				}
+				newFound = new SortedSet<T>();
+				foreach(T fromState in fromStates){
+					foreach(Transition<T> t in transitions)
+					{
+						T toState  = t.getToState();
+						if (t.getFromState().Equals(fromState) && t.getSymbol() == Transition<T>.EPSILON && !fromStates.Contains(toState))
+						{
+							newFound.Add(toState);
+						}
+					}
+				}
+				foreach (var item in newFound) {
+					fromStates.Add(item);
+				}
+				reachable = newFound;
+			} 
+			while (newFound.Count() != 0);
+
+			return fromStates;
 		}
 
     }

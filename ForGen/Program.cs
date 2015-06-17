@@ -14,13 +14,13 @@ namespace ForGen
 			Console.WriteLine("Programme started on "+DateTime.Now.ToString("hh:mm:ss.fff"));
             
 			testRegularExpression();
-			TestProcedure1 ().printGraphviz ();
+			Console.WriteLine(TestNDFA().isDFA ());
             Console.ReadLine();
 			Console.WriteLine("Programme successfully stopped on "+DateTime.Now.ToString("hh:mm:ss.fff"));
 
         }
 
-		static public Automata<String> TestProcedure1() {
+		static public Automata<String> TestDFA() {
 			char [] alphabet = {'a', 'b'};
 			Automata<String> m = new Automata<String>(alphabet);
 			m.addTransition( new Transition<String> ("q0", 'a', "q1") );
@@ -45,6 +45,30 @@ namespace ForGen
 			// two final states:
 			m.defineAsFinalState("q2");
 			m.defineAsFinalState("q3");
+
+			return m;
+		}
+
+		static public Automata<String> TestNDFA() {
+			char [] alphabet = {'a', 'b'};
+			Automata<String> m = new Automata<String>(alphabet);
+			m.addTransition( new Transition<String> ("1", 'a', "2") );
+			m.addTransition( new Transition<String> ("2", 'b', "2") );
+
+			m.addTransition( new Transition<String> ("2", 'b', "4") );
+			m.addTransition( new Transition<String> ("1", '$', "3") );
+
+			m.addTransition( new Transition<String> ("3", '$', "2") );
+			m.addTransition( new Transition<String> ("3", 'a', "4") );
+
+			m.addTransition( new Transition<String> ("4", 'a', "3") );
+
+			// only on start state in a dfa:
+			m.defineAsStartState("1");
+
+			// two final states:
+			m.defineAsFinalState("3");
+			m.defineAsFinalState("4");
 
 			return m;
 		}

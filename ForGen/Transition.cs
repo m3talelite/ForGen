@@ -89,5 +89,11 @@ namespace ForGen
         {
 			return this.fromState + " -> " + this.toState + "[ label = \"" + this.symbol + "\"];";
         }
+
+		public char getSymbol()
+		{
+			return symbol;
+		}
+
     }
 }
