@@ -96,6 +96,12 @@ namespace ForGen
 			return m;
 		}
 
+		public static void testConverter(Automata<String> ndfa)
+		{
+			converter c = new converter ();
+			c.NDFAToDFA(ndfa);
+		}
+
 		public static void testRegularExpression()
 		{
 			RegularExpression exp1, exp2, exp3, exp4, exp5, a, b, all;

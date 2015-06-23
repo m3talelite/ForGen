@@ -8,11 +8,9 @@ namespace ForGen
         {
 
 			Console.WriteLine("Programme started on "+DateTime.Now.ToString("hh:mm:ss.fff"));
-			Tester.testRegularExpression();
-			Console.WriteLine(Tester.TestNDFA().isDFA ());
+			Tester.testConverter(Tester.TestNDFA());
             Console.ReadLine();
 			Console.WriteLine("Programme successfully stopped on "+DateTime.Now.ToString("hh:mm:ss.fff"));
-
         }
     }
 }

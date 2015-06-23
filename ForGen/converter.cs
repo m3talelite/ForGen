@@ -8,13 +8,9 @@ namespace ForGen
 {
 	public class converter
 	{
-		public converter(Automata<String> Automata)
+		public converter()
 		{
-			if(Automata.isDFA()){
-				DFAToNDFA(Automata);
-			} else{
-				NDFAToDFA(Automata);
-			}
+			
 		}
 
 		public Automata<String> NDFAToDFA(Automata<String> Automata){
@@ -22,7 +18,10 @@ namespace ForGen
 			Automata<String> dfa = new Automata<String>(alphabet);
 			foreach (String state in Automata.getStates()) {
 				foreach (var letter in alphabet) {
-					Automata.getToStates(state, letter);
+					foreach (var item in Automata.getToStates(state, letter)) {
+						
+						Console.WriteLine("State: " + state + " met Letter: " + letter + " kan ik hier komen: " + item);
+					}
 				}
 			}
 			return dfa;
