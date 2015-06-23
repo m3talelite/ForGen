@@ -19,35 +19,49 @@ namespace ForGen
 			//Console.WriteLine(TestNDFA().isDFA ());
             //Console.ReadLine();
 			//Console.WriteLine("Programme successfully stopped on "+DateTime.Now.ToString("hh:mm:ss.fff"));
-
-			LaunchCommandLineApp ();
+			generateAutomataImage(TestDFA());
 			Console.ReadLine ();
 
         }
 
-		static void LaunchCommandLineApp()
+		static void generateAutomataImage(Automata<String> automata)
 		{
-			// For the example
-			const string ex1 = "/usr/bin/";
-			const string ex2 = "-h";
+			//IF LINUX
+			const string input_file = "/tmp/important.png";
+			const string output_file = "/tmp/tmp.png";
+			const string executable_file = "dot";
+			const string file_opener = "xdg-open";
 
-			// Use ProcessStartInfo class
-			ProcessStartInfo startInfo = new ProcessStartInfo();
-			startInfo.CreateNoWindow = false;
-			startInfo.UseShellExecute = false;
-			startInfo.FileName = "dot";
-			startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-			startInfo.Arguments = "-f j -o \"" + ex1 + "\" -z 1.0 -s y " + ex2;
+			//IF WINDOWS
+			//const string output_file = "/tmp/important.png";
+			//const string ex2 = "-h";
 
+			string dotinfo = automata.printGraphviz();
+		
 			try
 			{
-				// Start the process with the info we specified.
-				// Call WaitForExit and then the using statement will close.
-				using (Process exeProcess = Process.Start(startInfo))
-				{
-					exeProcess.BeginOutputReadLine();
-					exeProcess.WaitForExit();
-				}
+				ProcessStartInfo startInfo = new ProcessStartInfo();
+				startInfo.CreateNoWindow = false;
+				startInfo.UseShellExecute = false;
+				startInfo.FileName = executable_file;
+				startInfo.RedirectStandardInput = true;
+				startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+				startInfo.Arguments = " -v -Tpng -o " + output_file;
+
+				Process exeProcess = new Process();
+				exeProcess.StartInfo = startInfo;
+				exeProcess.Start ();
+				//exeProcess.WaitForInputIdle();
+				StreamWriter writer  = exeProcess.StandardInput;
+				writer.Write (dotinfo);
+				writer.Flush ();
+				writer.WriteLine ();
+				exeProcess.WaitForInputIdle ();
+				writer.Close ();
+				Process openProcess = new Process();
+				openProcess.StartInfo.FileName = file_opener;
+				openProcess.StartInfo.Arguments = output_file;
+				openProcess.Start();
 			}
 			catch
 			{

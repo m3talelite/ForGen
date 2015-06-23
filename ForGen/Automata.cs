@@ -82,18 +82,26 @@ namespace ForGen
 			}
 		}
 
-		public void printGraphviz(){
-			StreamWriter writer = new StreamWriter ("/tmp/important.txt");
-			writer.Write ("digraph finite_state_machine {");
-			writer.Write ("rankdir=q;");
-			writer.Write ("size=\"8,5\"");
-			writer.Write ("node [shape = doublecircle]; LR_0 LR_3 LR_4 LR_8;"); //todo check if endstate
-			writer.Write ("node [shape = circle];"); //todo check if normal state
+		public string printGraphviz(){
+			string graphviz = "digraph finite_state_machine {";
+			graphviz = graphviz + "rankdir=q;";
+			graphviz = graphviz + "size=\"8,5\"";
+
+			graphviz = graphviz + "node [shape = doublecircle]; ";
+			foreach (T t in finalStates) {
+				graphviz = graphviz + t + ' ';
+			}
+			graphviz = graphviz +";\n"; //todo check if endstate
+			graphviz = graphviz +"node [shape = circle];"; //todo check if normal state
 			foreach(Transition<T> t in transitions)
 			{
-				writer.Write (t);
+				graphviz = graphviz +t;
 			}
-			writer.Write ("}");
+			graphviz = graphviz +"node [shape = point ]; qi\nqi -> ";
+			graphviz = graphviz +startStates.First();
+			graphviz = graphviz +" ;\n";
+			graphviz = graphviz +"}";
+			return graphviz;
 		}
 
 		public bool isDFA()
