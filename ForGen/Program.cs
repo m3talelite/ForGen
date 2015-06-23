@@ -26,15 +26,20 @@ namespace ForGen
 
 		static void generateAutomataImage(Automata<String> automata)
 		{
-			//IF LINUX
-			const string input_file = "/tmp/important.png";
-			const string output_file = "/tmp/tmp.png";
-			const string executable_file = "dot";
-			const string file_opener = "xdg-open";
+			string output_file = "";
+			string executable_file = "";
+			string file_opener = "";
+			int p = (int) Environment.OSVersion.Platform;
+			if ((p == 4) || (p == 6) || (p == 128)) { //UNIX
+				output_file = "/tmp/tmp.png";
+				executable_file = "dot";
+				file_opener = "xdg-open";
+			} else {//NOT UNIX FIX THIS
+				output_file = "/tmp/tmp.png";
+				executable_file = "dot";
+				file_opener = "xdg-open";
+			}
 
-			//IF WINDOWS
-			//const string output_file = "/tmp/important.png";
-			//const string ex2 = "-h";
 
 			string dotinfo = automata.printGraphviz();
 		
@@ -65,7 +70,7 @@ namespace ForGen
 			}
 			catch
 			{
-				// Log error.
+				// Log error. FIX THIS
 			}
 		}
 
