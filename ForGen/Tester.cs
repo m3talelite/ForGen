@@ -53,6 +53,7 @@ namespace ForGen
 				writer.WriteLine ();
 				exeProcess.WaitForInputIdle ();
 				writer.Close ();
+				exeProcess.WaitForExit();
 				Process openProcess = new Process();
 				openProcess.StartInfo.FileName = file_opener;
 				openProcess.StartInfo.Arguments = output_file;
