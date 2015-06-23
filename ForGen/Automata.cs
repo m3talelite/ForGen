@@ -29,10 +29,10 @@ namespace ForGen
 
 		public Automata(SortedSet<char> symbols)
 		{
-			transitions = new List<Transition<T>>();
-			states = new SortedSet<T>();
-			startStates = new SortedSet<T>();
-			finalStates = new SortedSet<T>();
+			this.transitions = new List<Transition<T>>();
+			this.states = new SortedSet<T>();
+			this.startStates = new SortedSet<T>();
+			this.finalStates = new SortedSet<T>();
 			this.setAlphabet(symbols);
 		}
 
@@ -59,6 +59,10 @@ namespace ForGen
 			// if already in states no problem because a Set will remove duplicates.
 			states.Add(t);
 			startStates.Add(t);        
+		}
+
+		public SortedSet<T> getStates(){
+			return states;
 		}
 
 		public int getTransistionsNumber(){
