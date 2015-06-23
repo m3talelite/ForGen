@@ -66,6 +66,18 @@ namespace ForGen
 			return states;
 		}
 
+		public SortedSet<T> getStartStates(){
+			return startStates;
+		}
+
+		public SortedSet<T> getFinalStates(){
+			return finalStates;
+		}
+
+		public List<Transition<T>> getTransitions(){
+			return transitions;
+		}
+
 		public int getTransistionsNumber(){
 			return transitions.Count();       
 		}

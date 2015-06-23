@@ -118,6 +118,37 @@ namespace ForGen
 			return m;
 		}
 
+		static public Automata<String> TestNDFA2() {
+			char [] alphabet = {'a', 'b', 'c', 'd'};
+			Automata<String> m = new Automata<String>(alphabet);
+			m.addTransition( new Transition<String> ("0", '$', "1") );
+			m.addTransition( new Transition<String> ("0", '$', "3") );
+
+			m.addTransition( new Transition<String> ("1", 'b', "2") );
+			m.addTransition( new Transition<String> ("3", 'a', "4") );
+
+			m.addTransition( new Transition<String> ("2", '$', "5") );
+			m.addTransition( new Transition<String> ("4", '$', "5") );
+
+			m.addTransition( new Transition<String> ("5", '$', "0") );
+
+			m.addTransition( new Transition<String> ("5", '$', "6") );
+
+			m.addTransition( new Transition<String> ("6", 'b', "7") );
+
+			m.addTransition( new Transition<String> ("7", 'c', "8") );
+
+			m.addTransition( new Transition<String> ("8", 'd', "9") );
+
+			// only on start state in a dfa:
+			m.defineAsStartState("0");
+
+			// two final states:
+			m.defineAsFinalState("9");
+
+			return m;
+		}
+
 		static public Automata<String> TestProcedure2() {
 			char [] alphabet = {'a', 'b'};
 			Automata<String> m = new Automata<String>(alphabet);

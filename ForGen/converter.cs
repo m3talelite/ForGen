@@ -19,7 +19,6 @@ namespace ForGen
 			foreach (String state in Automata.getStates()) {
 				foreach (var letter in alphabet) {
 					foreach (var item in Automata.getToStates(state, letter)) {
-						
 						Console.WriteLine("State: " + state + " met Letter: " + letter + " kan ik hier komen: " + item);
 					}
 				}

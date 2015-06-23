@@ -15,15 +15,14 @@ namespace ForGen
 
 		public Automata<String> NDFAToDFA(Automata<String> Automata){
 			SortedSet<char> alphabet = Automata.getAlphabet();
-			Automata<String> dfa = new Automata<String>(alphabet);
-			foreach (String state in Automata.getStates()) {
-				foreach (var letter in alphabet) {
-					foreach (var item in Automata.getToStates(state, letter)) {
-
-						Console.WriteLine("State: " + state + " met Letter: " + letter + " kan ik hier komen: " + item);
-					}
+			Automata<String> dfa = new Automata<String> (alphabet);
+			foreach (var letter in Automata.getAlphabet()) {
+				foreach (var state in Automata.getStartStates()) {
+					dfa.addTransition( new Transition<String> (state, letter, string.Join(",", findAccessible(Automata, letter, state))));
 				}
+				Console.WriteLine(string.Join(",",findAccessible(Automata, 'c', findAccessible(Automata, letter, findAccessible(Automata, letter, "0")))));
 			}
+			//WELKE HACKER FIXT DIT ?
 			return dfa;
 		}
 
@@ -35,6 +34,30 @@ namespace ForGen
 			}
 			return ndfa;
 		}
+
+		//Funny functions
+		public SortedSet<String> findAccessible(Automata<String> Automata, char letter, String state){
+			SortedSet<String> foundStates = new SortedSet<String>();
+				foreach (var item in Automata.getToStates (state, letter)) {
+				if (!foundStates.Contains(item)) {
+					foundStates.Add(item);
+				}
+			}
+			return foundStates;
+		}
+
+		public SortedSet<String> findAccessible(Automata<String> Automata, char letter, SortedSet<String> states){
+			SortedSet<String> foundStates = new SortedSet<String>();
+			foreach (var state in states) {
+				foreach (var item in Automata.getToStates (state, letter)) {
+					if (!foundStates.Contains(item)) {
+						foundStates.Add(item);
+					}
+				}
+			}
+			return foundStates;
+		}
+
 	}
 }
 
