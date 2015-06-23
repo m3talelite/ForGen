@@ -47,7 +47,6 @@
     <Compile Include="RegularExpression.cs" />
     <Compile Include="Transition.cs" />
     <Compile Include="converter.cs" />
-    <Compile Include="NDFAToDFA.cs" />
     <Compile Include="Tester.cs" />
   </ItemGroup>
   <ItemGroup>
