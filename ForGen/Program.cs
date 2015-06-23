@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Diagnostics;
+using System.IO;
 
 namespace ForGen
 {
@@ -13,12 +15,45 @@ namespace ForGen
 
 			Console.WriteLine("Programme started on "+DateTime.Now.ToString("hh:mm:ss.fff"));
             
-			testRegularExpression();
-			Console.WriteLine(TestNDFA().isDFA ());
-            Console.ReadLine();
-			Console.WriteLine("Programme successfully stopped on "+DateTime.Now.ToString("hh:mm:ss.fff"));
+			//testRegularExpression();
+			//Console.WriteLine(TestNDFA().isDFA ());
+            //Console.ReadLine();
+			//Console.WriteLine("Programme successfully stopped on "+DateTime.Now.ToString("hh:mm:ss.fff"));
+
+			LaunchCommandLineApp ();
+			Console.ReadLine ();
 
         }
+
+		static void LaunchCommandLineApp()
+		{
+			// For the example
+			const string ex1 = "/usr/bin/";
+			const string ex2 = "-h";
+
+			// Use ProcessStartInfo class
+			ProcessStartInfo startInfo = new ProcessStartInfo();
+			startInfo.CreateNoWindow = false;
+			startInfo.UseShellExecute = false;
+			startInfo.FileName = "dot";
+			startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+			startInfo.Arguments = "-f j -o \"" + ex1 + "\" -z 1.0 -s y " + ex2;
+
+			try
+			{
+				// Start the process with the info we specified.
+				// Call WaitForExit and then the using statement will close.
+				using (Process exeProcess = Process.Start(startInfo))
+				{
+					exeProcess.BeginOutputReadLine();
+					exeProcess.WaitForExit();
+				}
+			}
+			catch
+			{
+				// Log error.
+			}
+		}
 
 		static public Automata<String> TestDFA() {
 			char [] alphabet = {'a', 'b'};

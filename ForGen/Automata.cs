@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace ForGen
 {
@@ -82,16 +83,17 @@ namespace ForGen
 		}
 
 		public void printGraphviz(){
-			Console.WriteLine ("digraph finite_state_machine {");
-			Console.WriteLine ("rankdir=q;");
-			Console.WriteLine ("size=\"8,5\"");
-			Console.WriteLine ("node [shape = doublecircle]; LR_0 LR_3 LR_4 LR_8;"); //todo check if endstate
-			Console.WriteLine ("node [shape = circle];"); //todo check if normal state
+			StreamWriter writer = new StreamWriter ("/tmp/important.txt");
+			writer.Write ("digraph finite_state_machine {");
+			writer.Write ("rankdir=q;");
+			writer.Write ("size=\"8,5\"");
+			writer.Write ("node [shape = doublecircle]; LR_0 LR_3 LR_4 LR_8;"); //todo check if endstate
+			writer.Write ("node [shape = circle];"); //todo check if normal state
 			foreach(Transition<T> t in transitions)
 			{
-				Console.WriteLine(t);
+				writer.Write (t);
 			}
-			Console.WriteLine ("}");
+			writer.Write ("}");
 		}
 
 		public bool isDFA()
