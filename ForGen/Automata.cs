@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 namespace ForGen
 {
@@ -85,17 +86,26 @@ namespace ForGen
 			}
 		}
 
-		public void printGraphviz(){
-			Console.WriteLine ("digraph finite_state_machine {");
-			Console.WriteLine ("rankdir=q;");
-			Console.WriteLine ("size=\"8,5\"");
-			Console.WriteLine ("node [shape = doublecircle]; LR_0 LR_3 LR_4 LR_8;"); //todo check if endstate
-			Console.WriteLine ("node [shape = circle];"); //todo check if normal state
+		public string printGraphviz(){
+			string graphviz = "digraph finite_state_machine {";
+			graphviz = graphviz + "rankdir=q;";
+			graphviz = graphviz + "size=\"8,5\"";
+
+			graphviz = graphviz + "node [shape = doublecircle]; ";
+			foreach (T t in finalStates) {
+				graphviz = graphviz + t + ' ';
+			}
+			graphviz = graphviz +";\n"; //todo check if endstate
+			graphviz = graphviz +"node [shape = circle];"; //todo check if normal state
 			foreach(Transition<T> t in transitions)
 			{
-				Console.WriteLine(t);
+				graphviz = graphviz +t;
 			}
-			Console.WriteLine ("}");
+			graphviz = graphviz +"node [shape = point ]; qi\nqi -> ";
+			graphviz = graphviz +startStates.First();
+			graphviz = graphviz +" ;\n";
+			graphviz = graphviz +"}";
+			return graphviz;
 		}
 
 		public bool isDFA()
