@@ -19,15 +19,17 @@ namespace ForGen
 			string output_file = "";
 			string executable_file = "";
 			string file_opener = "";
+            bool windows = false;
 			int p = (int) Environment.OSVersion.Platform;
 			if ((p == 4) || (p == 6) || (p == 128)) { //UNIX
 				output_file = "/tmp/tmp.png";
 				executable_file = "dot";
 				file_opener = "xdg-open";
 			} else {//NOT UNIX FIX THIS
-				output_file = "/tmp/tmp.png";
-				executable_file = "dot";
-				file_opener = "xdg-open";
+                windows = true;
+				output_file = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                output_file = output_file + "\\img.png";
+				executable_file = "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";
 			}
 
 
@@ -51,17 +53,25 @@ namespace ForGen
 				writer.Write (dotinfo);
 				writer.Flush ();
 				writer.WriteLine ();
-				exeProcess.WaitForInputIdle ();
+                if(!windows)
+    				exeProcess.WaitForInputIdle();
 				writer.Close ();
 				exeProcess.WaitForExit();
-				Process openProcess = new Process();
-				openProcess.StartInfo.FileName = file_opener;
-				openProcess.StartInfo.Arguments = output_file;
-				openProcess.Start();
+                if (!windows)
+                {
+                    Process openProcess = new Process();
+                    openProcess.StartInfo.FileName = file_opener;
+                    openProcess.StartInfo.Arguments = output_file;
+                    openProcess.Start();
+                }
+                else
+                {
+                    Process.Start(output_file);
+                }
 			}
 			catch
 			{
-				// Log error. FIX THIS
+                Console.Write("Random exception");
 			}
 		}
 
