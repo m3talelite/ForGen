@@ -220,6 +220,11 @@ namespace ForGen
 			exp4 = exp3.plus();
 			// exp 4 (baa | bb)+ (a|b)*
 			exp5 = exp4.dot(all);
+			Automata<String> auto = new Automata<String>();
+			int num = 0;
+			exp5.regexToNDFA(ref num, auto);
+			generateAutomataImage(auto);
+			return;
 
 			#region PRINTREGULAREXPRESSION
 

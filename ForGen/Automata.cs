@@ -140,15 +140,18 @@ namespace ForGen
 			foreach (T t in finalStates) {
 				graphviz = graphviz + t + ' ';
 			}
-			graphviz = graphviz +";\n"; //todo check if endstate
+			if (finalStates.Count>0)
+				graphviz = graphviz +";\n"; //todo check if endstate
 			graphviz = graphviz +"node [shape = circle];"; //todo check if normal state
 			foreach(Transition<T> t in transitions)
 			{
 				graphviz = graphviz +t;
 			}
-			graphviz = graphviz +"node [shape = point ]; qi\nqi -> ";
-			graphviz = graphviz +startStates.First();
-			graphviz = graphviz +" ;\n";
+			if (startStates.Count > 0) {
+				graphviz = graphviz + "node [shape = point ]; qi\nqi -> ";
+				graphviz = graphviz + startStates.First();
+				graphviz = graphviz + " ;\n";
+			}
 			graphviz = graphviz +"}";
 			return graphviz;
 		}
