@@ -86,6 +86,32 @@ namespace ForGen
 			}
 		}
 
+		public string returnGrammar() {
+			string terun = "G = {N, S, P, entry}\n";
+			terun = terun + "N = {STATES}\n";
+			terun = terun + "S = {ALPHABET}\n";
+			terun = terun + "P:\n";
+			foreach (T state in this.getStates()) {
+				terun = terun + state + " -> ";
+				bool f = true;
+				foreach (var letter in getAlphabet()) {
+
+
+					foreach (var item in getToStates(state, letter)) {
+						if (f) {
+							terun = terun + letter + item;
+							f = false;
+						}
+						else
+							terun = terun + " | " +  letter + item;
+						//Console.WriteLine("State: " + state + " met Letter: " + letter + " kan ik hier komen: " + item);
+					}
+				}
+				terun = terun + "\n";
+			}
+			return terun;
+		}
+
 		public string printGraphviz(){
 			string graphviz = "digraph finite_state_machine {";
 			graphviz = graphviz + "rankdir=q;";

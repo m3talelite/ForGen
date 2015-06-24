@@ -39,6 +39,7 @@
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
+    <Reference Include="Mono.C5" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Automata.cs" />
@@ -48,6 +49,8 @@
     <Compile Include="Transition.cs" />
     <Compile Include="Tester.cs" />
     <Compile Include="AutomataConverter.cs" />
+    <Compile Include="Grammar.cs" />
+    <Compile Include="ProductionRule.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
