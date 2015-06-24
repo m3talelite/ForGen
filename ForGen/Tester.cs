@@ -25,14 +25,13 @@ namespace ForGen
 				output_file = "/tmp/tmp.png";
 				executable_file = "dot";
 				file_opener = "xdg-open";
-			} else {//NOT UNIX FIX THIS
+			} else {
                 windows = true;
 				output_file = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
                 output_file = output_file + "\\img.png";
 				executable_file = "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";
 			}
-
-
+            
 			string dotinfo = automata.printGraphviz();
 
 			try
@@ -189,6 +188,13 @@ namespace ForGen
 
 			return m;
 		}
+
+        public static Automata<String> testInverse(Automata<String> automata)
+        {
+            AutomataConverter c = new AutomataConverter();
+            Automata<String> a = c.inverseAutomata(automata);
+            return a;
+        }
 
 		public static void testConverter(Automata<String> ndfa)
 		{

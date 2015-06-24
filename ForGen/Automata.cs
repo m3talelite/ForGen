@@ -10,7 +10,7 @@ namespace ForGen
 	public class Automata<T> where T : IComparable
 	{
 		private List<Transition<T>> transitions;
-		private SortedSet<T> states;
+        private SortedSet<T> states;
 		private SortedSet<T> startStates;
 	    private SortedSet<T> finalStates;
         private SortedSet<char> symbols;
@@ -23,7 +23,14 @@ namespace ForGen
 			this.finalStates = new SortedSet<T>();
 			this.setAlphabet(symbols);
 		}
-
+        public Automata(Automata<T> autom)
+        {
+            this.transitions = autom.transitions;
+            this.states = autom.states;
+            this.startStates = autom.startStates;
+            this.finalStates = autom.finalStates;
+            this.setAlphabet(autom.getAlphabet());
+        }
 		public Automata(char [] s): this(new SortedSet<char>(s))
 		{   
 		}
