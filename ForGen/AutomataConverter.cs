@@ -21,8 +21,6 @@ namespace ForGen
 				dfa.addTransition( new Transition<String> (state, '$', string.Join(",", findAccessible(Automata, '$', state))));
 			}
 			foreach (var letter in alphabet) {
-				
-				findAccessible(Automata, letter, state)
 			}
 			return dfa;
 		}
