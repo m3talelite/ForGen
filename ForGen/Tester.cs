@@ -19,15 +19,17 @@ namespace ForGen
 			string output_file = "";
 			string executable_file = "";
 			string file_opener = "";
+            bool windows = false;
 			int p = (int) Environment.OSVersion.Platform;
 			if ((p == 4) || (p == 6) || (p == 128)) { //UNIX
 				output_file = "/tmp/tmp.png";
 				executable_file = "dot";
 				file_opener = "xdg-open";
 			} else {//NOT UNIX FIX THIS
-				output_file = "/tmp/tmp.png";
-				executable_file = "dot";
-				file_opener = "xdg-open";
+                windows = true;
+				output_file = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+                output_file = output_file + "\\img.png";
+				executable_file = "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";
 			}
 
 
@@ -41,7 +43,7 @@ namespace ForGen
 				startInfo.FileName = executable_file;
 				startInfo.RedirectStandardInput = true;
 				startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-				startInfo.Arguments = " -v -Tpng -o " + output_file;
+				startInfo.Arguments = "  -Tpng -o " + output_file;
 
 				Process exeProcess = new Process();
 				exeProcess.StartInfo = startInfo;
@@ -51,17 +53,25 @@ namespace ForGen
 				writer.Write (dotinfo);
 				writer.Flush ();
 				writer.WriteLine ();
-				exeProcess.WaitForInputIdle ();
+                if(!windows)
+    				exeProcess.WaitForInputIdle();
 				writer.Close ();
 				exeProcess.WaitForExit();
-				Process openProcess = new Process();
-				openProcess.StartInfo.FileName = file_opener;
-				openProcess.StartInfo.Arguments = output_file;
-				openProcess.Start();
+                if (!windows)
+                {
+                    Process openProcess = new Process();
+                    openProcess.StartInfo.FileName = file_opener;
+                    openProcess.StartInfo.Arguments = output_file;
+                    openProcess.Start();
+                }
+                else
+                {
+                    Process.Start(output_file);
+                }
 			}
 			catch
 			{
-				// Log error. FIX THIS
+                Console.Write("Random exception");
 			}
 		}
 
@@ -114,6 +124,37 @@ namespace ForGen
 			// two final states:
 			m.defineAsFinalState("3");
 			m.defineAsFinalState("4");
+
+			return m;
+		}
+
+		static public Automata<String> TestNDFA2() {
+			char [] alphabet = {'a', 'b', 'c', 'd'};
+			Automata<String> m = new Automata<String>(alphabet);
+			m.addTransition( new Transition<String> ("0", '$', "1") );
+			m.addTransition( new Transition<String> ("0", '$', "3") );
+
+			m.addTransition( new Transition<String> ("1", 'b', "2") );
+			m.addTransition( new Transition<String> ("3", 'a', "4") );
+
+			m.addTransition( new Transition<String> ("2", '$', "5") );
+			m.addTransition( new Transition<String> ("4", '$', "5") );
+
+			m.addTransition( new Transition<String> ("5", '$', "0") );
+
+			m.addTransition( new Transition<String> ("5", '$', "6") );
+
+			m.addTransition( new Transition<String> ("6", 'b', "7") );
+
+			m.addTransition( new Transition<String> ("7", 'c', "8") );
+
+			m.addTransition( new Transition<String> ("8", 'd', "9") );
+
+			// only on start state in a dfa:
+			m.defineAsStartState("0");
+
+			// two final states:
+			m.defineAsFinalState("9");
 
 			return m;
 		}
