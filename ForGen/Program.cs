@@ -17,10 +17,11 @@ namespace ForGen
 			Tester.testConverter(Tester.TestNDFA());
             Console.ReadLine();
 			//Tester.generateAutomataImage(Tester.TestDFA());
-			Console.Write(Tester.TestNDFA().returnGrammar());
+			//Console.Write(Tester.TestNDFA().returnGrammar());
+			Console.Write(Tester.TestNDFA2().returnGrammar()); // This example still shows our code is faulty
 			Console.ReadLine ();
 			Tester.testConverter(Tester.TestNDFA2());
-            Tester.generateAutomataImage( Tester.testInverse ( Tester.TestNDFA2() ) );
+            Tester.generateAutomataImage(Tester.TestNDFA2());
 		    Console.ReadLine();
 			Console.WriteLine("Programme successfully stopped on "+DateTime.Now.ToString("hh:mm:ss.fff"));
         }

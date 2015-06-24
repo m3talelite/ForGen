@@ -11,7 +11,7 @@ namespace ForGen
 	{
 		private List<Transition<T>> transitions;
 		private SortedSet<T> states;
-		private SortedSet<T> startStates; //WARNING! THIS SHOULD NEVER EVER BE A SORTEDSET!!! THIS CAN ONLY BE ONE STATE ALTHOUGH EPSION TRANSITIONS MAKE IT ACT LIKE IT HAS MULTIPLE ENTRIES
+		private SortedSet<T> startStates; 
 		private SortedSet<T> finalStates;
 		private SortedSet<char> symbols;
 
