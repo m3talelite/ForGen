@@ -16,11 +16,19 @@ namespace ForGen
 		public Automata<String> NDFAToDFA(Automata<String> Automata){
 			SortedSet<char> alphabet = Automata.getAlphabet();
 			Automata<String> dfa = new Automata<String> (alphabet);
+			Dictionary<SortedSet<String>, char> dictionary = new Dictionary<SortedSet<String>, char>();
 			//check first point acces
+			SortedSet<String> startstate = new SortedSet<string>();
 			foreach (var state in Automata.getStartStates()) {
-				dfa.addTransition( new Transition<String> (state, '$', string.Join(",", findAccessible(Automata, '$', state))));
+				startstate.Add(state);
+				foreach (var newState in findSingleAccessible(Automata, '$', state)) {
+					startstate.Add(newState);
+				}
+				dfa.defineAsStartState(prettyPrint(startstate));
 			}
+			//From here start checking rest
 			foreach (var letter in alphabet) {
+				findMultipleAccessible(Automata, letter, startstate);
 			}
 			return dfa;
 		}
@@ -39,7 +47,7 @@ namespace ForGen
 			return string.Join(",", list);
 		}
 		//For a single state
-		public SortedSet<String> findAccessible(Automata<String> Automata, char letter, String state){
+		public SortedSet<String> findSingleAccessible(Automata<String> Automata, char letter, String state){
 			SortedSet<String> foundStates = new SortedSet<String>();
 				foreach (var item in Automata.getToStates (state, letter)) {
 				if (!foundStates.Contains(item)) {
@@ -49,7 +57,7 @@ namespace ForGen
 			return foundStates;
 		}
 		//For a set of states
-		public SortedSet<String> findAccessible(Automata<String> Automata, char letter, SortedSet<String> states){
+		public SortedSet<String> findMultipleAccessible(Automata<String> Automata, char letter, SortedSet<String> states){
 			SortedSet<String> foundStates = new SortedSet<String>();
 			foreach (var state in states) {
 				foreach (var item in Automata.getToStates (state, letter)) {
