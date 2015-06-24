@@ -107,7 +107,7 @@ namespace ForGen
 
 		public string returnGrammar() {
 
-			string result = "G = {N, S, P, entry}\n";
+			string result = "G = {N, S, P, "+ startStates.First() +"}\n";
 			result = result + "N = "+ statesToString() + "\n";
 			result = result + "S = "+ alphabetToString() + "\n";
 			result = result + "P:\n";
@@ -115,8 +115,6 @@ namespace ForGen
 				result = result + state + " -> ";
 				bool f = true;
 				foreach (var letter in getAlphabet()) {
-
-
 					foreach (var item in getToStates(state, letter)) {
 						if (f) {
 							result = result + letter + item;
@@ -124,7 +122,6 @@ namespace ForGen
 						}
 						else
 							result = result + " | " +  letter + item;
-						//Console.WriteLine("State: " + state + " met Letter: " + letter + " kan ik hier komen: " + item);
 					}
 				}
 				result = result + "\n";
@@ -225,7 +222,7 @@ namespace ForGen
 		{
 			string allStatesString = ""; //String that includes all the states of the automaton
 			foreach (T item in states) {
-				allStatesString += "A"+item + ", "; //Should we include the A? I think it makes it more readable, but you might disagree... 
+				allStatesString += item + ", ";
 			}
 			allStatesString = allStatesString.Remove(allStatesString.Length - 2, 1); //To remove the , and space after the last item, I think this is the solution that requires the least machine cycles
 			return allStatesString;
