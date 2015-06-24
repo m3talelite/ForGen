@@ -42,7 +42,7 @@ namespace ForGen
 				startInfo.FileName = executable_file;
 				startInfo.RedirectStandardInput = true;
 				startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-				startInfo.Arguments = " -v -Tpng -o " + output_file;
+				startInfo.Arguments = "  -Tpng -o " + output_file;
 
 				Process exeProcess = new Process();
 				exeProcess.StartInfo = startInfo;
