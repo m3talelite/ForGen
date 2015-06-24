@@ -10,11 +10,11 @@ namespace ForGen
 	public class Automata<T> where T : IComparable
 	{
 		private List<Transition<T>> transitions;
-        private SortedSet<T> states;
-		private SortedSet<T> startStates;
-	    private SortedSet<T> finalStates;
-        private SortedSet<char> symbols;
-		 
+		private SortedSet<T> states;
+		private SortedSet<T> startStates; //WARNING! THIS SHOULD NEVER EVER BE A SORTEDSET!!! THIS CAN ONLY BE ONE STATE ALTHOUGH EPSION TRANSITIONS MAKE IT ACT LIKE IT HAS MULTIPLE ENTRIES
+		private SortedSet<T> finalStates;
+		private SortedSet<char> symbols;
+
 		public Automata()
 		{
 			this.transitions = new SortedSet<Transition<T>>().ToList();
@@ -23,14 +23,14 @@ namespace ForGen
 			this.finalStates = new SortedSet<T>();
 			this.setAlphabet(symbols);
 		}
-        public Automata(Automata<T> autom)
-        {
-            this.transitions = autom.transitions;
-            this.states = autom.states;
-            this.startStates = autom.startStates;
-            this.finalStates = autom.finalStates;
-            this.setAlphabet(autom.getAlphabet());
-        }
+		public Automata(Automata<T> autom)
+		{
+			this.transitions = autom.transitions;
+			this.states = autom.states;
+			this.startStates = autom.startStates;
+			this.finalStates = autom.finalStates;
+			this.setAlphabet(autom.getAlphabet());
+		}
 		public Automata(char [] s): this(new SortedSet<char>(s))
 		{   
 		}
@@ -106,29 +106,30 @@ namespace ForGen
 		}
 
 		public string returnGrammar() {
-			string terun = "G = {N, S, P, entry}\n";
-			terun = terun + "N = {STATES}\n";
-			terun = terun + "S = {ALPHABET}\n";
-			terun = terun + "P:\n";
+
+			string result = "G = {N, S, P, entry}\n";
+			result = result + "N = "+ statesToString() + "\n";
+			result = result + "S = "+ alphabetToString() + "\n";
+			result = result + "P:\n";
 			foreach (T state in this.getStates()) {
-				terun = terun + state + " -> ";
+				result = result + state + " -> ";
 				bool f = true;
 				foreach (var letter in getAlphabet()) {
 
 
 					foreach (var item in getToStates(state, letter)) {
 						if (f) {
-							terun = terun + letter + item;
+							result = result + letter + item;
 							f = false;
 						}
 						else
-							terun = terun + " | " +  letter + item;
+							result = result + " | " +  letter + item;
 						//Console.WriteLine("State: " + state + " met Letter: " + letter + " kan ik hier komen: " + item);
 					}
 				}
-				terun = terun + "\n";
+				result = result + "\n";
 			}
-			return terun;
+			return result;
 		}
 
 		public string printGraphviz(){
@@ -220,5 +221,24 @@ namespace ForGen
 			return fromStates;
 		}
 
-    }
+		public String statesToString()
+		{
+			string allStatesString = ""; //String that includes all the states of the automaton
+			foreach (T item in states) {
+				allStatesString += "A"+item + ", "; //Should we include the A? I think it makes it more readable, but you might disagree... 
+			}
+			allStatesString = allStatesString.Remove(allStatesString.Length - 2, 1); //To remove the , and space after the last item, I think this is the solution that requires the least machine cycles
+			return allStatesString;
+		}
+
+		public String alphabetToString()
+		{
+			string alphabetString = ""; //String that includes all the letters of the used alphabet
+			foreach (char letter in symbols) {
+				alphabetString += letter + ", ";
+			}
+			alphabetString = alphabetString.Remove(alphabetString.Length - 2, 1); //To remove the , and space after the last item, I think this is the solution that requires the least machine cycles
+			return alphabetString;
+		}
+	}
 }
