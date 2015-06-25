@@ -22,13 +22,13 @@ namespace ForGen
             bool windows = false;
 			int p = (int) Environment.OSVersion.Platform;
 			if ((p == 4) || (p == 6) || (p == 128)) { //UNIX
-				output_file = "/tmp/tmp.png";
+				output_file = "/tmp/tmp.svg";
 				executable_file = "dot";
 				file_opener = "xdg-open";
 			} else {
                 windows = true;
 				output_file = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-                output_file = output_file + "\\img.png";
+                output_file = output_file + "\\img.svg";
 				executable_file = "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";
 			}
             
@@ -42,7 +42,7 @@ namespace ForGen
 				startInfo.FileName = executable_file;
 				startInfo.RedirectStandardInput = true;
 				startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-				startInfo.Arguments = "  -Tpng -o " + output_file;
+				startInfo.Arguments = "  -Tsvg -o " + output_file;
 
 				Process exeProcess = new Process();
 				exeProcess.StartInfo = startInfo;
@@ -222,7 +222,7 @@ namespace ForGen
 			exp5 = exp4.dot(all);
 			Automata<String> auto = new Automata<String>();
 			int num = 0;
-			exp5.regexToNDFA(ref num, auto);
+			exp5.regexToNDFA(ref num,ref auto);
 			generateAutomataImage(auto);
 			return;
 

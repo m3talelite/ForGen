@@ -134,7 +134,7 @@ namespace ForGen
 		public string printGraphviz(){
 			string graphviz = "digraph finite_state_machine {";
 			graphviz = graphviz + "rankdir=q;";
-			graphviz = graphviz + "size=\"8,5\"";
+			graphviz = graphviz + "size=\"12,5\"";
 
 			graphviz = graphviz + "node [shape = doublecircle]; ";
 			foreach (T t in finalStates) {
