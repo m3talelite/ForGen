@@ -18,10 +18,12 @@ namespace ForGen
             Console.ReadLine();
 			//Tester.generateAutomataImage(Tester.TestDFA());
 			//Console.Write(Tester.TestNDFA().returnGrammar());
-			Console.Write(Tester.TestNDFA2().returnGrammar()); // This example still shows our code is faulty
+			Console.Write(Tester.TestNDFA2().getGrammar().toString());
+			Console.ReadLine ();
+			Console.Write(Tester.TestNDFA2().getGrammar().toBeautifulString());
 			Console.ReadLine ();
 			Tester.testConverter(Tester.TestNDFA2());
-            Tester.generateAutomataImage(Tester.TestNDFA2());
+			Tester.generateAutomataImage(Tester.TestNDFA2());
 		    Console.ReadLine();
 			Console.WriteLine("Programme successfully stopped on "+DateTime.Now.ToString("hh:mm:ss.fff"));
         }

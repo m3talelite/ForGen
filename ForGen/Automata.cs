@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using C5;
 
 namespace ForGen
 {
@@ -105,28 +106,19 @@ namespace ForGen
 			}
 		}
 
-		public string returnGrammar() {
-
-			string result = "G = {N, S, P, "+ startStates.First() +"}\n";
-			result = result + "N = "+ statesToString() + "\n";
-			result = result + "S = "+ alphabetToString() + "\n";
-			result = result + "P:\n";
+		public Grammar<T> getGrammar() {
+			ArrayList<ProductionRule<T>> productionRules = new ArrayList<ProductionRule<T>>();
+			T startSymbol = startStates.First();
 			foreach (T state in this.getStates()) {
-				result = result + state + " -> ";
-				bool f = true;
 				foreach (var letter in getAlphabet()) {
 					foreach (var item in getToStates(state, letter)) {
-						if (f) {
-							result = result + letter + item;
-							f = false;
-						}
-						else
-							result = result + " | " +  letter + item;
+						ProductionRule<T> productRule = new ProductionRule<T>(state, letter, item);
+						productionRules.Add(productRule);
 					}
 				}
-				result = result + "\n";
 			}
-			return result;
+			Grammar<T> result = new Grammar<T>(startSymbol, productionRules);
+				return result;
 		}
 
 		public string printGraphviz(){
@@ -218,24 +210,6 @@ namespace ForGen
 			return fromStates;
 		}
 
-		public String statesToString()
-		{
-			string allStatesString = ""; //String that includes all the states of the automaton
-			foreach (T item in states) {
-				allStatesString += item + ", ";
-			}
-			allStatesString = allStatesString.Remove(allStatesString.Length - 2, 1); //To remove the , and space after the last item, I think this is the solution that requires the least machine cycles
-			return allStatesString;
-		}
 
-		public String alphabetToString()
-		{
-			string alphabetString = ""; //String that includes all the letters of the used alphabet
-			foreach (char letter in symbols) {
-				alphabetString += letter + ", ";
-			}
-			alphabetString = alphabetString.Remove(alphabetString.Length - 2, 1); //To remove the , and space after the last item, I think this is the solution that requires the least machine cycles
-			return alphabetString;
-		}
 	}
 }
