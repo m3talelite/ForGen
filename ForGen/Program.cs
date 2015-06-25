@@ -14,7 +14,7 @@ namespace ForGen
         {
 
 			Console.WriteLine("Programme started on "+DateTime.Now.ToString("hh:mm:ss.fff"));
-			Tester.testConverter(Tester.TestNDFA());
+			//Tester.testConverter(Tester.TestNDFA());
             Console.ReadLine();
 			//Tester.generateAutomataImage(Tester.TestDFA());
 			//Console.Write(Tester.TestNDFA().returnGrammar());

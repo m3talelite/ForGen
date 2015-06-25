@@ -124,21 +124,24 @@ namespace ForGen
 		public string printGraphviz(){
 			string graphviz = "digraph finite_state_machine {";
 			graphviz = graphviz + "rankdir=q;";
-			graphviz = graphviz + "size=\"8,5\"";
+			graphviz = graphviz + "size=\"12,5\"";
 
 			graphviz = graphviz + "node [shape = doublecircle]; ";
 			foreach (T t in finalStates) {
 				graphviz = graphviz + t + ' ';
 			}
-			graphviz = graphviz +";\n"; //todo check if endstate
+			if (finalStates.Count>0)
+				graphviz = graphviz +";\n"; //todo check if endstate
 			graphviz = graphviz +"node [shape = circle];"; //todo check if normal state
 			foreach(Transition<T> t in transitions)
 			{
 				graphviz = graphviz +t;
 			}
-			graphviz = graphviz +"node [shape = point ]; qi\nqi -> ";
-			graphviz = graphviz +startStates.First();
-			graphviz = graphviz +" ;\n";
+			if (startStates.Count > 0) {
+				graphviz = graphviz + "node [shape = point ]; qi\nqi -> ";
+				graphviz = graphviz + startStates.First();
+				graphviz = graphviz + " ;\n";
+			}
 			graphviz = graphviz +"}";
 			return graphviz;
 		}
