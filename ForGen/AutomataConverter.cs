@@ -69,12 +69,12 @@ namespace ForGen
 			return foundStates;
 		}
 
-        public Automata<String> inverseAutomata(Automata<String> Automata)
+        public Automata<String> inverseAutomata(Automata<String> arg0)
         {
-            SortedSet<String> tempFinalStates = new SortedSet<string>(Automata.getFinalStates());
-            SortedSet<String> tempStartStates = new SortedSet<string>(Automata.getStartStates());
-            SortedSet<String> tempStates = new SortedSet<string>(Automata.getStates());
-            Automata<String> automata = new Automata<string>(Automata);
+            SortedSet<String> tempFinalStates = new SortedSet<string>(arg0.getFinalStates());
+            SortedSet<String> tempStartStates = new SortedSet<string>(arg0.getStartStates());
+            SortedSet<String> tempStates = new SortedSet<string>(arg0.getStates());
+            Automata<String> automata = new Automata<string>(arg0);
 
             automata.getFinalStates().Clear();
             automata.getStartStates().Clear();
@@ -96,6 +96,17 @@ namespace ForGen
                 }
             }
             return automata;
+        }
+
+        public Automata<String> reverseAutomata(Automata<String> arg0)
+        {
+            Automata<String> reverseAutomata = inverseAutomata(arg0);
+
+            foreach (var transition in arg0.getTransitions())
+            {
+                transition.reverseFromToState();
+            }
+            return reverseAutomata;
         }
 
 	}

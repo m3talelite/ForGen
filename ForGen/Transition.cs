@@ -11,7 +11,7 @@ namespace ForGen
 	{
         public static readonly char EPSILON = '$';
 
-		public T fromState{
+		public T fromState  {
 			get;
 			private set;
 		}
@@ -21,7 +21,10 @@ namespace ForGen
 			private set;
 		}
 
-		public T toState;
+        public T toState    {
+            get;
+            private set;
+        }
 
         public Transition(T fromOrTo, char s)
             : base()
@@ -70,7 +73,14 @@ namespace ForGen
 			return this.fromState;
 		}
 
+        public void reverseFromToState()
+        {
+            var tempFrom = this.fromState;
+            var tempTo = this.toState;
 
+            this.fromState = tempTo;
+            this.toState = tempFrom;
+        }
         public int CompareTo(Transition<T> arg0)
         {
             int fromCompare = fromState.CompareTo(arg0.fromState);
