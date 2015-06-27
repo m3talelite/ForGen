@@ -209,6 +209,40 @@ namespace ForGen
 			c.NDFAToDFA(ndfa);
 		}
 
+		public static void testRegExpThompson()
+		{
+			RegularExpression exp1, exp2, exp3, exp4, exp5, a, b, c, all, why;
+
+			a = new RegularExpression("a");
+			b = new RegularExpression("b");
+			c = new RegularExpression("c");
+
+			//exp 1 (baa)
+			exp1 = new RegularExpression("baa");
+			//exp 2 (ac)
+			exp2 = new RegularExpression("ac");
+			//exp 4 (baa)+
+			exp4 = exp1.plus();
+			//exp 5 (ac)*
+			exp5 = exp2.star();
+			//exp 3 (a|b|c)*
+			exp3 = (a.or(b).or(c)).star();
+			//all (a|b|c)* (baa)+ (ca)*
+			all = exp3.dot(exp4.dot(exp5));
+			why = new RegularExpression("baa").plus().star().plus();
+
+				
+			foreach (String o in all.getLanguage(5))
+			{
+				Console.Write(o + " ");
+			}
+			Automata<String> auto = new Automata<String>();
+			int num = 0;
+			why.regexToNDFA(ref num,ref auto);
+			generateAutomataImage(auto);
+			return;
+		}
+
 		public static void testRegularExpression()
 		{
 			RegularExpression exp1, exp2, exp3, exp4, exp5, a, b, all;
@@ -227,12 +261,6 @@ namespace ForGen
 			exp4 = exp3.plus();
 			// exp 4 (baa | bb)+ (a|b)*
 			exp5 = exp4.dot(all);
-			Automata<String> auto = new Automata<String>();
-			int num = 0;
-			exp5.regexToNDFA(ref num,ref auto);
-			generateAutomataImage(auto);
-			return;
-
 			#region PRINTREGULAREXPRESSION
 
 			Console.WriteLine("taal van (baa):");
