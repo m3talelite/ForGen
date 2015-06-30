@@ -23,7 +23,7 @@ namespace ForGen
             
 		    Console.ReadLine();*/
 			//Tester.testRegularExpression();
-			Tester.testRegExpThompson();
+            Tester.testRegularExpressionThompson2();
             //Tester.generateAutomataImage( Tester.testInverse ( Tester.TestNDFA2() ) );
           //  Tester.generateAutomataImage( Tester.testReverse ( Tester.TestNDFA2() ) );
             Console.WriteLine("Programme successfully stopped on " + DateTime.Now.ToString("hh:mm:ss.fff"));

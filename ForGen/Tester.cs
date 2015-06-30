@@ -243,6 +243,39 @@ namespace ForGen
 			return;
 		}
 
+        public static void testRegularExpressionThompson2()
+        {
+            //This is the regular expression ( (a|b|c|d)|(ab|ad|bc) )+ (aab) (c|cad|cb)*
+            RegularExpression exp1, exp2, exp3, exp4, exp5, a, b, c, d, ab, ad, bc, abb, cad, cb,all, why;
+            a = new RegularExpression("a");
+            b = new RegularExpression("b");
+            c = new RegularExpression("c");
+            d = new RegularExpression("d");
+            ab = new RegularExpression("ab");
+            ad = new RegularExpression("ad");
+            bc = new RegularExpression("bc");
+            abb = new RegularExpression("abb");
+            cad = new RegularExpression("cad");
+            cb = new RegularExpression("cb");
+
+            // (a|b|c|d)
+            exp1 = (a.or(b).or(c).or(d));
+            // (ab|ad|bc)
+            exp2 = (ab.or(ad).or(bc));
+            // (c|cad|cb)*
+            exp3 = (c.or(cad).or(cb).star());
+            // ( (a|b|c|d) | (ab|ad|bc) )+
+            exp4 = (exp1.or(exp2).plus());
+            // Merge
+            all = exp4.dot(abb.dot(exp3));
+
+            Automata<String> auto = new Automata<String>();
+            int num = 0;
+            all.regexToNDFA(ref num, ref auto);
+            generateAutomataImage(auto);
+            return;
+        }
+
 		public static void testRegularExpression()
 		{
 			RegularExpression exp1, exp2, exp3, exp4, exp5, a, b, all;
