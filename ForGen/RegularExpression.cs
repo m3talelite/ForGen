@@ -191,13 +191,40 @@ namespace ForGen
 						
 					break;
 				case Operator.DOT:
-					if (nextstate == null)
+					bool nonext = false;
+					if (nextstate == null) {
 						nextstate = depth.ToString();
-					depth++;
-					left.regexToNDFA(ref depth, ref automata, prevstate, nextstate);
-					right.regexToNDFA(ref depth,ref automata, nextstate, depth.ToString());
-					if (nextstate == null)
-						automata.defineAsFinalState(depth.ToString());
+						depth++;
+						nonext = true;
+					}
+					String tmpstate = depth.ToString();
+					if (left.terminal.Count() > 0) {
+						lnewstate = prevstate;
+						depth++;
+						foreach (char s in left.terminal) {
+							automata.addTransition(new Transition<string>(lnewstate, s, depth.ToString()));
+							lnewstate = depth.ToString();
+							depth++;
+						}
+						automata.addTransition(new Transition<string>(lnewstate, tmpstate));
+					}
+					else
+						left.regexToNDFA(ref depth, ref automata, prevstate, tmpstate);
+					if (right.terminal.Count() > 0) {
+						lnewstate = tmpstate;
+						depth++;
+						foreach (char s in right.terminal) {
+							automata.addTransition(new Transition<string>(lnewstate, s, depth.ToString()));
+							lnewstate = depth.ToString();
+							depth++;
+						}
+						automata.addTransition(new Transition<string>(lnewstate, nextstate));
+					}
+					else
+						right.regexToNDFA(ref depth,ref automata, tmpstate, nextstate);
+					if (nonext) {
+						automata.defineAsFinalState(nextstate);
+					}
 					break;
 				case Operator.ONE: //NOT REALLY IMPLEMENTED
 					depth++;
@@ -223,16 +250,17 @@ namespace ForGen
 						rnewstate = depth.ToString();
 					} else {
 						rnewstate = depth.ToString();
+						depth++;
 						left.regexToNDFA(ref depth, ref automata, lnewstate, rnewstate); //NOT CHECKED, PROBABLY WRONG
 						//automata.addTransition(new Transition<string>(loldstate, depth.ToString()));
 						automata.addTransition(new Transition<string>(rnewstate, lnewstate));
 						automata.addTransition(new Transition<string>(rnewstate, depth.ToString()));
 						rnewstate = depth.ToString();
-						depth++;
 					}
 					if (nextstate != null)
 						automata.addTransition(new Transition<string>(depth.ToString(), nextstate));
 					else {
+						depth++;
 						automata.addTransition(new Transition<string>(rnewstate, depth.ToString()));
 						automata.defineAsFinalState(depth.ToString());
 					}

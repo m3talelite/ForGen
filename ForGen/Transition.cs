@@ -39,6 +39,8 @@ namespace ForGen
             this.fromState = from;
             this.symbol = EPSILON;
             this.toState = to;
+			if (to.ToString() == "6")
+				return;
         }
         public Transition(T from, char s, T to)
             : base()
