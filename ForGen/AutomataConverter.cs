@@ -72,6 +72,17 @@ namespace ForGen
 			}
 			Console.WriteLine(dfa.getTransistionsNumber());
 			dfa.printTransitions();
+			SortedSet<String> tempListFinal = new SortedSet<String>();
+			foreach (String stat in dfa.getStates()) {
+				foreach (String endState in Automaton.getFinalStates()) {
+					if (stat.Contains(endState))
+						tempListFinal.Add(stat);
+				}
+			}
+			foreach (String finState in tempListFinal) {
+				dfa.defineAsFinalState(finState);
+			}
+			Console.WriteLine(prettyPrint(dfa.getFinalStates()));
 			return dfa;
 		}
 
