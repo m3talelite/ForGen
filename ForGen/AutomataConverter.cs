@@ -16,20 +16,13 @@ namespace ForGen
 		public Automata<String> NDFAToDFA(Automata<String> Automata){
 			SortedSet<char> alphabet = Automata.getAlphabet();
 			Automata<String> dfa = new Automata<String> (alphabet);
-			Dictionary<SortedSet<String>, char> dictionary = new Dictionary<SortedSet<String>, char>();
 			//check first point acces
-			SortedSet<String> startstate = new SortedSet<string>();
-			foreach (var state in Automata.getStartStates()) {
-				startstate.Add(state);
-				foreach (var newState in findSingleAccessible(Automata, '$', state)) {
-					startstate.Add(newState);
-				}
-				dfa.defineAsStartState(prettyPrint(startstate));
+			SortedSet<string> startstate = new SortedSet<string>();
+			foreach (var newState in findStartState(Automata)) {
+				startstate.Add(newState);
 			}
-			//From here start checking rest
-			foreach (var letter in alphabet) {
-				findMultipleAccessible(Automata, letter, startstate);
-			}
+			Console.WriteLine(prettyPrint(startstate));
+			dfa.defineAsStartState(prettyPrint(startstate));
 			return dfa;
 		}
 
@@ -47,6 +40,21 @@ namespace ForGen
 			return string.Join(",", list);
 		}
 		//For a single state
+
+		public SortedSet<String> findStartState(Automata<String> Automata){
+			SortedSet<String> foundStates = new SortedSet<String>();
+			foreach (var start in Automata.getStartStates()) {
+				foundStates.Add(start);
+				foreach (var item in Automata.getToStates (start, '$')) {
+					if (!foundStates.Contains(item)) {
+						foundStates.Add(item);
+					}
+				}
+			}
+			return foundStates;
+		}
+
+
 		public SortedSet<String> findSingleAccessible(Automata<String> Automata, char letter, String state){
 			SortedSet<String> foundStates = new SortedSet<String>();
 				foreach (var item in Automata.getToStates (state, letter)) {
@@ -62,6 +70,7 @@ namespace ForGen
 			foreach (var state in states) {
 				foreach (var item in Automata.getToStates (state, letter)) {
 					if (!foundStates.Contains(item)) {
+						Console.WriteLine("This time using: " + state + " Gives: " + item);
 						foundStates.Add(item);
 					}
 				}
