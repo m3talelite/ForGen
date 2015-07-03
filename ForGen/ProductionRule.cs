@@ -16,10 +16,30 @@ namespace ForGen
 			this.right = r;
 		}
 
+		public T getLeft()
+		{
+			return left;
+		}
+
+		public char getX()
+		{
+			return x;
+		}
+
+		public T getRight()
+		{
+			return right;
+		}
 
 		public String toString()
 		{
+			// looks something like this: "0 --> a6"
 			return "" + left + " --> " + x + right;
+		}
+
+		public String toShortString()
+		{
+			return " | " + x + right;
 		}
 	}
 }

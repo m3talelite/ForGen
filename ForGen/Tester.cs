@@ -152,7 +152,7 @@ namespace ForGen
 			// only on start state in a dfa:
 			m.defineAsStartState("0");
 
-			// two final states:
+			// one final state:
 			m.defineAsFinalState("9");
 
 			return m;

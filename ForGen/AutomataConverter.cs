@@ -35,7 +35,7 @@ namespace ForGen
 			foreach(char letter in alphabet) //Check all states after the startstate with all the letters in the alphabet
 			{
 				if (findMultipleAccessible(Automaton, letter, findStartState(Automaton)).Count() == 0)
-					dfa.addTransition(new Transition<string>(prettyPrint(findStartState(Automaton)), letter, "FAULT"));
+					dfa.addTransition(new Transition<string>(prettyPrint(findStartState(Automaton)), letter, "Ø"));
 				else 
 				{
 					SortedSet<String> toStates = findMultipleAccessible(Automaton, letter, findStartState(Automaton));
@@ -53,9 +53,9 @@ namespace ForGen
 				foreach (KeyValuePair<Transition<String>,SortedSet<String>> pair in transitionsDict) {
 					foreach (char letter in alphabet) {
 						if (findMultipleAccessible(Automaton, letter, pair.Value).Count() == 0) {
-							if (dfa.getTransitions().Contains(new Transition<string>(pair.Key.getToState(), letter, "FAULT")) == false) {
-								dfa.addTransition(new Transition<string>(pair.Key.getToState(), letter, "FAULT"));
-								tempTransitionsDict.Add(new Transition<string>(pair.Key.getToState(), letter, "FAULT"),findMultipleAccessible(Automaton, letter, pair.Value));
+							if (dfa.getTransitions().Contains(new Transition<string>(pair.Key.getToState(), letter, "Ø")) == false) {
+								dfa.addTransition(new Transition<string>(pair.Key.getToState(), letter, "Ø"));
+								tempTransitionsDict.Add(new Transition<string>(pair.Key.getToState(), letter, "Ø"),findMultipleAccessible(Automaton, letter, pair.Value));
 							}
 						} else {
 							SortedSet<String> toStates = findMultipleAccessible(Automaton, letter, pair.Value);

@@ -19,8 +19,12 @@ namespace ForGen
 			//Tester.generateAutomataImage(Tester.TestDFA());
 			//Console.Write(Tester.TestNDFA().returnGrammar());
 			//Console.ReadLine ();
-			Tester.testConverter(Tester.TestNDFA());
+			Tester.testConverter(Tester.TestNDFA2());
 			//Tester.testRegularExpression();
+			Console.Write(Tester.TestNDFA2().getGrammar().toBeautifulString());
+			AutomataConverter c = new AutomataConverter();
+			Console.WriteLine(c.NDFAToDFA(Tester.TestNDFA2()).getGrammar().toBeautifulString());
+
             //Tester.testRegularExpressionThompson2();
 //			Tester.generateAutomataImage( Tester.generateAutomataImage() );
           	//Tester.generateAutomataImage( Tester.testReverse ( Tester.TestNDFA2() ) );

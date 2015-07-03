@@ -4,17 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
+using C5;
 
 namespace ForGen
 {
 	public class Automata<T> where T : IComparable
 	{
 		private List<Transition<T>> transitions;
-        private SortedSet<T> states;
-		private SortedSet<T> startStates;
-	    private SortedSet<T> finalStates;
-        private SortedSet<char> symbols;
-		 
+		private SortedSet<T> states;
+		private SortedSet<T> startStates; 
+		private SortedSet<T> finalStates;
+		private SortedSet<char> symbols;
+
 		public Automata()
 		{
 			this.transitions = new SortedSet<Transition<T>>().ToList();
@@ -23,14 +24,14 @@ namespace ForGen
 			this.finalStates = new SortedSet<T>();
 			this.setAlphabet(symbols);
 		}
-        public Automata(Automata<T> autom)
-        {
-            this.transitions = autom.transitions;
-            this.states = autom.states;
-            this.startStates = autom.startStates;
-            this.finalStates = autom.finalStates;
-            this.setAlphabet(autom.getAlphabet());
-        }
+		public Automata(Automata<T> autom)
+		{
+			this.transitions = autom.transitions;
+			this.states = autom.states;
+			this.startStates = autom.startStates;
+			this.finalStates = autom.finalStates;
+			this.setAlphabet(autom.getAlphabet());
+		}
 		public Automata(char [] s): this(new SortedSet<char>(s))
 		{   
 		}
@@ -105,30 +106,19 @@ namespace ForGen
 			}
 		}
 
-		public string returnGrammar() {
-			string terun = "G = {N, S, P, entry}\n";
-			terun = terun + "N = {STATES}\n";
-			terun = terun + "S = {ALPHABET}\n";
-			terun = terun + "P:\n";
+		public Grammar<T> getGrammar() {
+			ArrayList<ProductionRule<T>> productionRules = new ArrayList<ProductionRule<T>>();
+			T startSymbol = startStates.First();
 			foreach (T state in this.getStates()) {
-				terun = terun + state + " -> ";
-				bool f = true;
 				foreach (var letter in getAlphabet()) {
-
-
 					foreach (var item in getToStates(state, letter)) {
-						if (f) {
-							terun = terun + letter + item;
-							f = false;
-						}
-						else
-							terun = terun + " | " +  letter + item;
-						//Console.WriteLine("State: " + state + " met Letter: " + letter + " kan ik hier komen: " + item);
+						ProductionRule<T> productRule = new ProductionRule<T>(state, letter, item);
+						productionRules.Add(productRule);
 					}
 				}
-				terun = terun + "\n";
 			}
-			return terun;
+			Grammar<T> result = new Grammar<T>(startSymbol, productionRules);
+				return result;
 		}
 
 		public string printGraphviz(){
@@ -223,5 +213,6 @@ namespace ForGen
 			return fromStates;
 		}
 
-    }
+
+	}
 }
