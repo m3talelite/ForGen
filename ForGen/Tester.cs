@@ -207,6 +207,7 @@ namespace ForGen
 		{
 			AutomataConverter c = new AutomataConverter();
 			c.NDFAToDFA(ndfa);
+			generateAutomataImage(c.NDFAToDFA(ndfa));
 		}
 
 		public static void testRegExpThompson()
@@ -239,7 +240,6 @@ namespace ForGen
 			Automata<String> auto = new Automata<String>();
 			int num = 0;
 			why.regexToNDFA(ref num,ref auto);
-			generateAutomataImage(auto);
 			return;
 		}
 

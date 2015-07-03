@@ -19,10 +19,10 @@ namespace ForGen
 			//Tester.generateAutomataImage(Tester.TestDFA());
 			//Console.Write(Tester.TestNDFA().returnGrammar());
 			//Console.ReadLine ();
-			Tester.testConverter(Tester.TestNDFA2());
+			Tester.testConverter(Tester.TestNDFA());
 			//Tester.testRegularExpression();
             //Tester.testRegularExpressionThompson2();
-            //Tester.generateAutomataImage( Tester.testInverse ( Tester.TestNDFA2() ) );
+//			Tester.generateAutomataImage( Tester.generateAutomataImage() );
           	//Tester.generateAutomataImage( Tester.testReverse ( Tester.TestNDFA2() ) );
             Console.WriteLine("Programme successfully stopped on " + DateTime.Now.ToString("hh:mm:ss.fff"));
         }

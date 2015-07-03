@@ -13,31 +13,74 @@ namespace ForGen
 
 		}
 
-		public Automata<String> NDFAToDFA(Automata<String> Automata){
-			SortedSet<char> alphabet = Automata.getAlphabet();
-			Automata<String> dfa = new Automata<String> (alphabet);
-			//check first point acces
-			SortedSet<string> startstate = new SortedSet<string>();
-			foreach (var newState in findStartState(Automata)) {
-				startstate.Add(newState);
+//		public Automata<String> NDFAToDFA(Automata<String> Automata){
+//			SortedSet<char> alphabet = Automata.getAlphabet();
+//			Automata<String> dfa = new Automata<String> (alphabet);
+//			//check first point access
+//			SortedSet<string> startstate = new SortedSet<string>();
+//			foreach (var newState in findStartState(Automata)) {
+//				startstate.Add(newState);
+//			}
+//			Console.WriteLine(prettyPrint(startstate));
+//			dfa.defineAsStartState(prettyPrint(startstate));
+//			return dfa;
+//		}
+
+		public Automata<String> NDFAToDFA(Automata<String> Automaton)
+		{
+			SortedSet<char> alphabet = Automaton.getAlphabet();
+			Automata<String> dfa = new Automata<String>(alphabet);
+			Dictionary<Transition<String>,SortedSet<String>> transitionsDict = new Dictionary < Transition<String>,SortedSet<String>>();
+			dfa.defineAsStartState(prettyPrint(findStartState(Automaton))); //Set startstates for dfa
+			foreach(char letter in alphabet) //Check all states after the startstate with all the letters in the alphabet
+			{
+				if (findMultipleAccessible(Automaton, letter, findStartState(Automaton)).Count() == 0)
+					dfa.addTransition(new Transition<string>(prettyPrint(findStartState(Automaton)), letter, "FAULT"));
+				else 
+				{
+					SortedSet<String> toStates = findMultipleAccessible(Automaton, letter, findStartState(Automaton));
+					Transition<String> newTransition = new Transition<string>(prettyPrint(findStartState(Automaton)), letter, prettyPrint(toStates));
+					transitionsDict.Add(newTransition, toStates);
+					dfa.addTransition(newTransition);
+				}
 			}
-			Console.WriteLine(prettyPrint(startstate));
-			dfa.defineAsStartState(prettyPrint(startstate));
+
+			Console.WriteLine(dfa.getTransistionsNumber());
+			int tempTransitionsNumber = 0;
+			Dictionary<Transition<String>,SortedSet<String>> tempTransitionsDict = new Dictionary < Transition<String>,SortedSet<String>>();
+			while (dfa.getTransistionsNumber()!= tempTransitionsNumber) {
+				tempTransitionsNumber = dfa.getTransistionsNumber();
+				foreach (KeyValuePair<Transition<String>,SortedSet<String>> pair in transitionsDict) {
+					foreach (char letter in alphabet) {
+						if (findMultipleAccessible(Automaton, letter, pair.Value).Count() == 0) {
+							if (dfa.getTransitions().Contains(new Transition<string>(pair.Key.getToState(), letter, "FAULT")) == false) {
+								dfa.addTransition(new Transition<string>(pair.Key.getToState(), letter, "FAULT"));
+								tempTransitionsDict.Add(new Transition<string>(pair.Key.getToState(), letter, "FAULT"),findMultipleAccessible(Automaton, letter, pair.Value));
+							}
+						} else {
+							SortedSet<String> toStates = findMultipleAccessible(Automaton, letter, pair.Value);
+							Transition<String> newTransition = new Transition<string>(pair.Key.getToState(), letter, prettyPrint(toStates));
+							if (dfa.getTransitions().Contains(new Transition<string>(pair.Key.getToState(), letter, prettyPrint(toStates))) == false) {
+								tempTransitionsDict.Add(newTransition, toStates);
+								dfa.addTransition(newTransition);
+						
+							}
+						}
+					}
+				}
+				transitionsDict = transitionsDict.Union(tempTransitionsDict).ToDictionary(k => k.Key, v => v.Value);
+			}
+			Console.WriteLine(dfa.getTransistionsNumber());
+			dfa.printTransitions();
 			return dfa;
-		}
-
-		public Automata<String> DFAToNDFA(Automata<String> Automata){
-			SortedSet<char> alphabet = Automata.getAlphabet();
-			Automata<String> ndfa = new Automata<String>(alphabet);
-			foreach (var state in Automata.getStates()) {
-
-			}
-			return ndfa;
 		}
 
 		//Funny functions
 		public string prettyPrint(SortedSet<String> list){
 			return string.Join(",", list);
+		}
+		public string prottyPrint(SortedSet<String> list){
+			return string.Join(".", list);
 		}
 		//For a single state
 
@@ -70,7 +113,7 @@ namespace ForGen
 			foreach (var state in states) {
 				foreach (var item in Automata.getToStates (state, letter)) {
 					if (!foundStates.Contains(item)) {
-						Console.WriteLine("This time using: " + state + " Gives: " + item);
+						Console.WriteLine("Using letter: " + letter +  " Gives: " + item);
 						foundStates.Add(item);
 					}
 				}
