@@ -19,6 +19,8 @@ namespace ForGen
 			//Tester.generateAutomataImage(Tester.TestDFA());
 			//Console.Write(Tester.TestNDFA().returnGrammar());
 			//Console.ReadLine ();
+			char[] alfabet = {'a', 'b', 'c', 'd'};
+			Console.WriteLine(Tester.generateRandomRegex(alfabet,10).ToString());
 			Tester.testConverter(Tester.TestNDFA2());
 			//Tester.testRegularExpression();
 			Console.Write(Tester.TestNDFA2().getGrammar().toBeautifulString());

@@ -243,6 +243,46 @@ namespace ForGen
 			return;
 		}
 
+		public static RegularExpression generateRandomRegex(char[] alfabet, int depth=5)
+		{
+			Random r = new Random();
+			bool wasmulti = false;
+			RegularExpression begin = new RegularExpression("a");
+			for (int c = 0; c < depth; c++) {
+				int type;
+				if (wasmulti)
+					type = r.Next(1, 2);
+				else
+					type = r.Next(1, 4);
+				wasmulti = false;
+				switch (type) {
+					case 1: //ONE & DOT
+						string terminal = "";
+						for (int i = 0; i < r.Next(1, 5); i++) {
+							terminal = terminal + alfabet[r.Next(0, alfabet.Count())];	
+						}
+						begin = begin.dot(new RegularExpression(terminal));
+						break;
+					case 2: //ONE & OR
+						terminal = "";
+						for (int i = 0; i < r.Next(1, 5); i++) {
+							terminal = terminal + alfabet[r.Next(0, alfabet.Count())];	
+						}
+						begin = begin.or(new RegularExpression(terminal));
+						break;
+					case 3: //PLUS
+						begin = begin.plus();
+						wasmulti = true;
+						break;
+					case 4: //STAR
+						begin = begin.star();
+						wasmulti = true;
+						break;
+				}
+			}
+			return begin;
+		}
+
         public static void testRegularExpressionThompson2()
         {
             //This is the regular expression ( (a|b|c|d)|(ab|ad|bc) )+ (aab) (c|cad|cb)*

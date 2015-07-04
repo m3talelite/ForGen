@@ -15,7 +15,7 @@ namespace ForGen
     }
 
 
-    class RegularExpression
+    public class RegularExpression
     {
         Operator operate;
         string terminal;
