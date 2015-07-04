@@ -120,15 +120,15 @@ namespace ForGen
             return invertedAutomaton;
         }
 
-        public Automata<String> reverseAutomata(Automata<String> arg0)
+        public Automata<String> reverseAutomata(Automata<String> automaton)
         {
-            Automata<String> reverseAutomata = inverseAutomata(arg0);
+			Automata<String> reversedAutomaton = inverseAutomata(automaton);
 
-            foreach (var transition in arg0.getTransitions())
+            foreach (var transition in automaton.getTransitions())
             {
                 transition.reverseFromToState();
             }
-            return reverseAutomata;
+            return reversedAutomaton;
         }
 
 	}
