@@ -101,33 +101,23 @@ namespace ForGen
 			return foundStates;
 		}
 
-        public Automata<String> inverseAutomata(Automata<String> arg0)
+        public Automata<String> inverseAutomata(Automata<String> automaton)
         {
-            SortedSet<String> tempFinalStates = new SortedSet<string>(arg0.getFinalStates());
-            SortedSet<String> tempStartStates = new SortedSet<string>(arg0.getStartStates());
-            SortedSet<String> tempStates = new SortedSet<string>(arg0.getStates());
-            Automata<String> automata = new Automata<string>(arg0);
+			Automata<String> invertedAutomaton = new Automata<string>(automaton.getAlphabet());
 
-            automata.getFinalStates().Clear();
-            automata.getStartStates().Clear();
-            automata.getStates().Clear();
+			invertedAutomaton.defineAsStartState(automaton.getStartStates().First());
 
-            foreach (var stateStart in tempStartStates)
-            {
-                automata.defineAsStartState(stateStart);
-                automata.defineAsFinalState(stateStart);
-            }
-            foreach (var stateFinal in tempFinalStates)
-            {
-                foreach (var state in tempStates)
-                {
-                    if (state != stateFinal)
-                    {
-                        automata.defineAsFinalState(state);
-                    }
-                }
-            }
-            return automata;
+			foreach (Transition<String> transition in automaton.getTransitions()) {
+				invertedAutomaton.addTransition(transition);
+			}
+
+			foreach(String state in automaton.getStates()) {
+				if (!automaton.getFinalStates().Contains(state)) {
+					invertedAutomaton.defineAsFinalState(state);
+				}
+			}
+
+            return invertedAutomaton;
         }
 
         public Automata<String> reverseAutomata(Automata<String> arg0)

@@ -25,8 +25,7 @@ namespace ForGen
 			//Tester.generateAutomataImage(Tester.TestDFA());
 			//Tester.generateAutomataImage( Tester.generateAutomataImage() );
 			//Tester.generateAutomataImage( Tester.testReverse ( Tester.TestNDFA2() ) );
-			Tester.generateAutomataImage(Tester.testConverter(Tester.TestNDFA2()));
-
+			Tester.generateAutomataImage(Tester.testInverse(Tester.TestDFA()));
 			/*
 			//TEST CODE FOR GENERATING RANDOM REGEX
 			char[] alfabet = {'a', 'b', 'c', 'd'};
