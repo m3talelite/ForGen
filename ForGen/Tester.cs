@@ -243,11 +243,11 @@ namespace ForGen
             return a;
         }
 
-		public static void testConverter(Automata<String> ndfa)
+		public static Automata<String> testConverter(Automata<String> ndfa)
 		{
 			AutomataConverter c = new AutomataConverter();
-			c.NDFAToDFA(ndfa);
-			generateAutomataImage(c.NDFAToDFA(ndfa));
+
+			return c.NDFAToDFA(ndfa); 
 		}
 
 		public static void testRegExpThompson()

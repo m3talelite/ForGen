@@ -21,12 +21,11 @@ namespace ForGen
 			Tester.testConverter(Tester.TestNDFA2());
 			*/
 
-			/*
 			//TEST CODE FOR GENERATING IMAGES
-			Tester.generateAutomataImage(Tester.TestDFA());
+			//Tester.generateAutomataImage(Tester.TestDFA());
 			//Tester.generateAutomataImage( Tester.generateAutomataImage() );
 			//Tester.generateAutomataImage( Tester.testReverse ( Tester.TestNDFA2() ) );
-			*/
+			Tester.generateAutomataImage(Tester.testConverter(Tester.TestNDFA2()));
 
 			/*
 			//TEST CODE FOR GENERATING RANDOM REGEX
@@ -38,10 +37,12 @@ namespace ForGen
 			Tester.testRegularExpression();
 			*/
 
-
+			/*
 			//TESTCODE FOR Minimalization
 			Console.WriteLine(Tester.TestDFA2().getGrammar().toBeautifulString());
 			Console.WriteLine(Tester.testMinimalization(Tester.TestDFA2()).getGrammar().toBeautifulString());
+			*/
+
 
 
 			/*

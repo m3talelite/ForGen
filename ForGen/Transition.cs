@@ -99,7 +99,7 @@ namespace ForGen
 
         public override string ToString()
         {
-			return this.fromState + " -> " + this.toState + "[ label = \"" + this.symbol + "\"];";
+			return "\"" + this.fromState + "\"" + " -> " + "\"" + this.toState + "\"" + "[ label = \"" + this.symbol + "\"];";
         }
 
 		public char getSymbol()
