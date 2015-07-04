@@ -78,9 +78,8 @@ namespace ForGen
         public void reverseFromToState()
         {
             var tempFrom = this.fromState;
-            var tempTo = this.toState;
 
-            this.fromState = tempTo;
+			this.fromState = this.fromState;
             this.toState = tempFrom;
         }
         public int CompareTo(Transition<T> arg0)
