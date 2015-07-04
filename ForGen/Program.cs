@@ -38,12 +38,13 @@ namespace ForGen
 			*/
 			//Tester.generateAutomataImage(Tester.testReverse(Tester.TestDFA()));
 			AutomataConverter c = new AutomataConverter();
-//			Tester.generateAutomataImage(c.NDFAToDFA(Tester.TestNDFA2()));
-			Tester.generateAutomataImage(c.NDFAToDFA(Tester.testReverse(c.NDFAToDFA(Tester.testReverse(c.NDFAToDFA(Tester.TestNDFA2()))))));
+//			Tester.generateAutomataImage(c.renameStates(c.NDFAToDFA(Tester.TestNDFA2())));
+//			Tester.generateAutomataImage(c.renameStates(c.NDFAToDFA(Tester.testReverse(c.NDFAToDFA(Tester.TestNDFA2())))));
+			Tester.generateAutomataImage(c.renameStates(c.NDFAToDFA(Tester.testReverse(c.NDFAToDFA(Tester.testReverse(c.NDFAToDFA(Tester.TestNDFA2())))))));
 			Automata<String> debug = new Automata<string>(c.NDFAToDFA(Tester.testReverse(Tester.TestNDFA2())));
 			debug = c.NDFAToDFA(Tester.testReverse(debug));
 			debug.printTransitions();
-
+			c.renameStates(debug);
 			/*
 			//TESTCODE FOR Minimalization
 			Console.WriteLine(Tester.TestDFA2().getGrammar().toBeautifulString());

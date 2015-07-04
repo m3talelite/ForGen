@@ -178,6 +178,29 @@ namespace ForGen
 			return reversedAutomaton;
 		}
 
+		public Automata<String> renameStates(Automata<String> automaton)
+		{
+			Automata<String> renamedAutomaton = new Automata<string>(automaton.getAlphabet());
+			Dictionary<String, String> referencer = new Dictionary<string, string>();
+			int counter = 0;
+			foreach (String state in automaton.getStates())
+			{
+					referencer.Add(state,"q"+counter++);
+				Console.WriteLine("q" + counter);
+			}
+			if(automaton.getStates().Contains("Ø"))
+				referencer["Ø"] = "Ø";
+			foreach (Transition<String> transition in automaton.getTransitions()) {
+				renamedAutomaton.addTransition(new Transition<string>(referencer[transition.getFromState()],transition.getSymbol(), referencer[transition.getToState()]));
+			}
+			foreach (String state in automaton.getFinalStates()) {
+				renamedAutomaton.defineAsFinalState(referencer[state]);
+			}
+			foreach (String state in automaton.getStartStates()) {
+				renamedAutomaton.defineAsStartState(referencer[state]);
+			}
+			return renamedAutomaton;
+		}
 	}
 }
 
