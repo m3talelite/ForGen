@@ -25,7 +25,8 @@ namespace ForGen
 			//Tester.generateAutomataImage(Tester.TestDFA());
 			//Tester.generateAutomataImage( Tester.generateAutomataImage() );
 			//Tester.generateAutomataImage( Tester.testReverse ( Tester.TestNDFA2() ) );
-			Tester.generateAutomataImage(Tester.testInverse(Tester.TestDFA()));
+			//Tester.generateAutomataImage(Tester.testConverter(Tester.TestNDFA2()));
+
 			/*
 			//TEST CODE FOR GENERATING RANDOM REGEX
 			char[] alfabet = {'a', 'b', 'c', 'd'};
@@ -35,6 +36,13 @@ namespace ForGen
 			//TEST CODE FOR REGEX
 			Tester.testRegularExpression();
 			*/
+			//Tester.generateAutomataImage(Tester.testReverse(Tester.TestDFA()));
+			AutomataConverter c = new AutomataConverter();
+//			Tester.generateAutomataImage(c.NDFAToDFA(Tester.TestNDFA2()));
+			Tester.generateAutomataImage(c.NDFAToDFA(Tester.testReverse(c.NDFAToDFA(Tester.testReverse(c.NDFAToDFA(Tester.TestNDFA2()))))));
+			Automata<String> debug = new Automata<string>(c.NDFAToDFA(Tester.testReverse(Tester.TestNDFA2())));
+			debug = c.NDFAToDFA(Tester.testReverse(debug));
+			debug.printTransitions();
 
 			/*
 			//TESTCODE FOR Minimalization

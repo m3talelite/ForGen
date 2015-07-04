@@ -105,7 +105,9 @@ namespace ForGen
         {
 			Automata<String> invertedAutomaton = new Automata<string>(automaton.getAlphabet());
 
-			invertedAutomaton.defineAsStartState(automaton.getStartStates().First());
+			foreach (String state in automaton.getFinalStates()) {
+				invertedAutomaton.defineAsStartState(state);
+			}
 
 			foreach (Transition<String> transition in automaton.getTransitions()) {
 				invertedAutomaton.addTransition(transition);
@@ -117,19 +119,64 @@ namespace ForGen
 				}
 			}
 
+			foreach(String state in automaton.getFinalStates())
+			{
+				if (state != invertedAutomaton.getStartStates().First())
+					invertedAutomaton.addTransition(new Transition<string>(invertedAutomaton.getStartStates().First(),state));
+			}
+
+
             return invertedAutomaton;
         }
 
-        public Automata<String> reverseAutomata(Automata<String> automaton)
-        {
-			Automata<String> reversedAutomaton = inverseAutomata(automaton);
+//		public Automata<String> reverseAutomata(Automata<String> automaton)
+//		{
+//			Automata<String> reversedAutomaton = new Automata<String>(automaton.getAlphabet());
+//
+//			foreach (Transition<String> transition in automaton.getTransitions())
+//			{
+//				transition.reverseFromToState();
+//				reversedAutomaton.addTransition(transition);
+//			}
+//
+//			foreach (String state in automaton.getStartStates()) {
+//				reversedAutomaton.defineAsStartState(state);
+//			}
+//
+//			foreach (String state in automaton.getFinalStates()) {
+//				reversedAutomaton.defineAsFinalState(state);
+//			}
+//			reversedAutomaton.printTransitions();
+//
+//			reversedAutomaton = inverseAutomata(reversedAutomaton);
+//
+//			reversedAutomaton.printTransitions();
+//			return reversedAutomaton;
+//		}
 
-            foreach (var transition in automaton.getTransitions())
-            {
-                transition.reverseFromToState();
-            }
-            return reversedAutomaton;
-        }
+		public Automata<String> reverseAutomata(Automata<String> automaton)
+		{
+			Automata<String> reversedAutomaton = new Automata<string>(automaton.getAlphabet());
+
+			foreach (Transition<String> transition in automaton.getTransitions()) {
+				transition.reverseFromToState();
+				reversedAutomaton.addTransition(transition);
+			}
+
+			foreach (String state in automaton.getFinalStates()) {
+				reversedAutomaton.defineAsStartState(state);
+			}
+
+			foreach (String state in automaton.getStartStates()) {
+				reversedAutomaton.defineAsFinalState(state);
+			}
+
+			foreach (String state in automaton.getFinalStates()) {
+				reversedAutomaton.addTransition(new Transition<string>(reversedAutomaton.getStartStates().First(), state));
+			}
+
+			return reversedAutomaton;
+		}
 
 	}
 }
