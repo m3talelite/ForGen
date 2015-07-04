@@ -56,7 +56,6 @@ namespace ForGen
 				}
 				transitionsDict = transitionsDict.Union(tempTransitionsDict).ToDictionary(k => k.Key, v => v.Value);
 			}
-			dfa.printTransitions();
 			SortedSet<String> tempListFinal = new SortedSet<String>();
 			foreach (String stat in dfa.getStates()) {
 				foreach (String endState in Automaton.getFinalStates()) {

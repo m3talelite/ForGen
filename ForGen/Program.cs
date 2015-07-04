@@ -39,10 +39,17 @@ namespace ForGen
 			*/
 
 
+			//TESTCODE FOR Minimalization
+			Console.WriteLine(Tester.TestDFA2().getGrammar().toBeautifulString());
+			Console.WriteLine(Tester.testMinimalization(Tester.TestDFA2()).getGrammar().toBeautifulString());
+
+
+			/*
 			//TEST CODE FOR PRINTING GRAMMAR
 			Console.Write(Tester.TestNDFA2().getGrammar().toBeautifulString());
 			AutomataConverter c = new AutomataConverter();
 			Console.WriteLine(c.NDFAToDFA(Tester.TestNDFA2()).getGrammar().toBeautifulString());
+			*/
 
 			/*
             //TEST CODE FOR THOMPSON
