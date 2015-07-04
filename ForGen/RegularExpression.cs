@@ -307,6 +307,28 @@ namespace ForGen
 			}
 
 		}
+		public override string ToString()
+		{
+			string result = "";
+			switch (operate) {
+				case Operator.OR:
+					result = '('+left.ToString() + '|' + right.ToString()+')';
+					break;
+				case Operator.PLUS:
+					result = '('+left.ToString()+')' + '+';
+					break;
+				case  Operator.STAR:
+					result = '('+left.ToString()+')' + '*';
+					break;
+				case Operator.DOT:
+					result = left.ToString() + right.ToString();
+					break;
+				case Operator.ONE:
+					result = terminal;
+					break;
+			}
+			return result;
+		}
     }
 
     public class CompareByLength : IComparer<string>

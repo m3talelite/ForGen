@@ -286,14 +286,19 @@ namespace ForGen
 			exp1 = new RegularExpression("baa");
 			// exp 2 bb
 			exp2 = new RegularExpression("bb");
+
 			// exp 3 baa | bb
 			exp3 = exp1.or(exp2);
+
 			//all = (a|b)*
 			all = (a.or(b)).star();
+
 			// exp 4 (baa | bb)+
 			exp4 = exp3.plus();
 			// exp 4 (baa | bb)+ (a|b)*
 			exp5 = exp4.dot(all);
+			Console.WriteLine(exp5.ToString());
+
 			#region PRINTREGULAREXPRESSION
 
 			Console.WriteLine("taal van (baa):");
