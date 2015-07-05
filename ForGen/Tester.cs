@@ -14,6 +14,12 @@ namespace ForGen
 		{
 		}
 
+		static public Automata<String> testMinimalization(Automata<String> automata)
+		{
+			AutomataMinimalization m = new AutomataMinimalization();
+			return m.Minimization(automata);
+		}
+
 		static public void generateAutomataImage(Automata<String> automata)
 		{
 			string output_file = "";
@@ -33,7 +39,7 @@ namespace ForGen
 			}
             
 			string dotinfo = automata.printGraphviz();
-
+			Console.WriteLine(dotinfo);
 			try
 			{
 				ProcessStartInfo startInfo = new ProcessStartInfo();
@@ -97,6 +103,40 @@ namespace ForGen
 			m.defineAsStartState("q0");
 
 			// two final states:
+			m.defineAsFinalState("q2");
+			m.defineAsFinalState("q3");
+
+			return m;
+		}
+
+		static public Automata<String> TestDFA2() {
+			char [] alphabet = {'a', 'b'};
+			Automata<String> m = new Automata<String>(alphabet);
+			m.addTransition( new Transition<String> ("q0", 'a', "q2") );
+			m.addTransition( new Transition<String> ("q0", 'b', "q3") );
+
+			m.addTransition( new Transition<String> ("q1", 'a', "q3") );
+			m.addTransition( new Transition<String> ("q1", 'b', "q2") );
+
+			m.addTransition( new Transition<String> ("q2", 'a', "q0") );
+			m.addTransition( new Transition<String> ("q2", 'b', "q4") );
+
+			m.addTransition( new Transition<String> ("q3", 'a', "q1") );
+			m.addTransition( new Transition<String> ("q3", 'b', "q5") );
+
+			m.addTransition( new Transition<String> ("q4", 'a', "q6") );
+			m.addTransition( new Transition<String> ("q4", 'b', "q5") );
+
+			m.addTransition( new Transition<String> ("q5", 'a', "q2") );
+			m.addTransition( new Transition<String> ("q5", 'b', "q0") );
+
+			m.addTransition( new Transition<String> ("q6", 'a', "q4") );
+			m.addTransition( new Transition<String> ("q6", 'b', "q0") );
+
+			// only on start state in a dfa:
+			m.defineAsStartState("q0");
+
+			// final states:
 			m.defineAsFinalState("q2");
 			m.defineAsFinalState("q3");
 
@@ -203,11 +243,11 @@ namespace ForGen
             return a;
         }
 
-		public static void testConverter(Automata<String> ndfa)
+		public static Automata<String> testConverter(Automata<String> ndfa)
 		{
 			AutomataConverter c = new AutomataConverter();
-			c.NDFAToDFA(ndfa);
-			generateAutomataImage(c.NDFAToDFA(ndfa));
+
+			return c.NDFAToDFA(ndfa); 
 		}
 
 		public static void testRegExpThompson()
