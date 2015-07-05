@@ -18,6 +18,7 @@ namespace ForGen
 				Environment.NewLine + "3. NDFA -> DFA"+
 				Environment.NewLine + "4. Minimalisatie DFA"+
 				Environment.NewLine + "5. Generate tentame"+
+				Environment.NewLine + "6. Woorden generator"+
 				Environment.NewLine + "9. Afsluiten");
 			var ans = Console.ReadLine();
 			int choice=0;
@@ -39,6 +40,9 @@ namespace ForGen
 						break;
 					case 5:
 						GenerateTentame();
+						break;
+					case 6:
+						WoordenGenerator();
 						break;
 					case 9:
 						Console.Clear();
@@ -236,6 +240,41 @@ namespace ForGen
 						Console.Clear();
 						LaTeXGenerator g = new LaTeXGenerator();
 						g.generateLaTeXExam();
+						ResetToMenu();
+						break;
+					default:
+						Console.WriteLine("Deze optie is niet beschikbaar." +
+							Environment.NewLine + "Druk op een knop om terug te gaan");
+						ResetToMenu();
+						break;
+				}
+			}
+			else
+			{
+				Console.WriteLine("Vul alstublieft het nummer van de keuze in."+
+					Environment.NewLine + "Druk op een knop om terug te gaan");
+				ResetToMenu();
+			}
+		}
+
+		static public void WoordenGenerator(){
+			Console.Clear();
+			Console.WriteLine("1. Woorden generator regex" +
+				Environment.NewLine + "2. Woorden generator thompson");
+			var ans = Console.ReadLine();
+			int choice=0;
+			if (int.TryParse(ans, out choice))
+			{
+				switch (choice)
+				{
+					case 1:
+						Console.Clear();
+						Tester.testRegularExpression();
+						ResetToMenu();
+						break;
+					case 2:
+						Console.Clear();
+						Tester.testRegularExpressionThompson2();
 						ResetToMenu();
 						break;
 					default:
