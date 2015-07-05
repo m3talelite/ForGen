@@ -240,12 +240,22 @@ namespace ForGen
 					break;
 				case Operator.ONE: //NOT REALLY IMPLEMENTED
 					depth++;
-					if (left != null)
-						left.regexToNDFA(ref depth,ref automata, prevstate);
-					if (right != null)
-						right.regexToNDFA(ref depth,ref automata, prevstate);
+					lnewstate = prevstate;
+					foreach (char s in terminal) {
+						automata.addTransition(new Transition<string>(lnewstate, s, depth.ToString()));
+						automata.addToAlphabet(s);
+						lnewstate = depth.ToString();
+						depth++;
+					}
+					if (nextstate == null)
+						automata.defineAsFinalState((depth-1).ToString());
 					break;
 				case Operator.PLUS:
+					if (nextstate == null) {
+						nextstate = depth.ToString();
+						depth++;
+						nonext = true;
+					}
 					depth++;
 					automata.addTransition(new Transition<string>(prevstate, depth.ToString()));
 					lnewstate = depth.ToString();
@@ -270,7 +280,7 @@ namespace ForGen
 						automata.addTransition(new Transition<string>(rnewstate, depth.ToString()));
 						rnewstate = depth.ToString();
 					}
-					if (nextstate != null)
+					if (!nonext)
 						automata.addTransition(new Transition<string>(depth.ToString(), nextstate));
 					else {
 						depth++;
@@ -282,6 +292,11 @@ namespace ForGen
 				case Operator.STAR:
 					if (depth.ToString() == nextstate)
 						depth++;
+					if (nextstate == null) {
+						nextstate = depth.ToString();
+						depth++;
+						nonext = true;
+					}
 					automata.addTransition(new Transition<string>(prevstate, depth.ToString()));
 					lnewstate = depth.ToString();
 					rnewstate = lnewstate;
@@ -311,7 +326,7 @@ namespace ForGen
 						depth++;
 
 					}
-					if (nextstate != null)
+					if (!nonext)
 						automata.addTransition(new Transition<string>(lnewstate, nextstate));
 					else {
 						automata.addTransition(new Transition<string>(lnewstate, depth.ToString()));
