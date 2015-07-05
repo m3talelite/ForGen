@@ -21,37 +21,42 @@ namespace ForGen
 			Tester.testConverter(Tester.TestNDFA2());
 			*/
 
+			/*
 			//TEST CODE FOR GENERATING IMAGES
-			//Tester.generateAutomataImage(Tester.TestDFA());
+			Tester.generateAutomataImage(Tester.TestDFA());
 			//Tester.generateAutomataImage( Tester.generateAutomataImage() );
 			//Tester.generateAutomataImage( Tester.testReverse ( Tester.TestNDFA2() ) );
 			//Tester.generateAutomataImage(Tester.testConverter(Tester.TestNDFA2()));
+			*/
 
 			/*
 			//TEST CODE FOR GENERATING RANDOM REGEX
 			char[] alfabet = {'a', 'b', 'c', 'd'};
 			Console.WriteLine(Tester.generateRandomRegex(alfabet, 10).ToString());
 			*/
+
 			/*
 			//TEST CODE FOR REGEX
 			Tester.testRegularExpression();
 			*/
+
+
 			//Tester.generateAutomataImage(Tester.testReverse(Tester.TestDFA()));
-			AutomataConverter c = new AutomataConverter();
-//			Tester.generateAutomataImage(c.renameStates(c.NDFAToDFA(Tester.TestNDFA2())));
-//			Tester.generateAutomataImage(c.renameStates(c.NDFAToDFA(Tester.testReverse(c.NDFAToDFA(Tester.TestNDFA2())))));
-			Tester.generateAutomataImage(c.renameStates(c.NDFAToDFA(Tester.testReverse(c.NDFAToDFA(Tester.testReverse(c.NDFAToDFA(Tester.TestNDFA2())))))));
-			Automata<String> debug = new Automata<string>(c.NDFAToDFA(Tester.testReverse(Tester.TestNDFA2())));
-			debug = c.NDFAToDFA(Tester.testReverse(debug));
-			debug.printTransitions();
-			c.renameStates(debug);
-			/*
-			//TESTCODE FOR Minimalization
-			Console.WriteLine(Tester.TestDFA2().getGrammar().toBeautifulString());
-			Console.WriteLine(Tester.testMinimalization(Tester.TestDFA2()).getGrammar().toBeautifulString());
-			*/
+
+			//AutomataConverter c = new AutomataConverter();
+
+			//Tester.generateAutomataImage(c.renameStates(c.NDFAToDFA(Tester.TestNDFA2())));
+			//Tester.generateAutomataImage(c.renameStates(c.NDFAToDFA(Tester.testReverse(c.NDFAToDFA(Tester.TestNDFA2())))));
+
+			//Tester.generateAutomataImage(c.renameStates(c.NDFAToDFA(Tester.testReverse(c.NDFAToDFA(Tester.testReverse(c.NDFAToDFA(Tester.TestNDFA2())))))));
+			//Automata<String> debug = new Automata<string>(c.NDFAToDFA(Tester.testReverse(Tester.TestNDFA2())));
+			//debug = c.NDFAToDFA(Tester.testReverse(debug));
+			//debug.printTransitions();
+			//c.renameStates(debug);
 
 
+			//TEST CODE FOR Minimalization
+			Tester.generateAutomataImage(Tester.testMinimalization(Tester.TestDFA2()));
 
 			/*
 			//TEST CODE FOR PRINTING GRAMMAR

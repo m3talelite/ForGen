@@ -137,9 +137,11 @@ namespace ForGen
 			m.defineAsStartState("q0");
 
 			// final states:
-			m.defineAsFinalState("q2");
+			m.defineAsFinalState("q1");
 			m.defineAsFinalState("q3");
 
+			m.defineAsFinalState("q4");
+			m.defineAsFinalState("q6");
 			return m;
 		}
 
@@ -326,7 +328,7 @@ namespace ForGen
         public static void testRegularExpressionThompson2()
         {
             //This is the regular expression ( (a|b|c|d)|(ab|ad|bc) )+ (aab) (c|cad|cb)*
-            RegularExpression exp1, exp2, exp3, exp4, exp5, a, b, c, d, ab, ad, bc, abb, cad, cb,all, why;
+            RegularExpression exp1, exp2, exp3, exp4, a, b, c, d, ab, ad, bc, abb, cad, cb,all;
             a = new RegularExpression("a");
             b = new RegularExpression("b");
             c = new RegularExpression("c");

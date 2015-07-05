@@ -11,7 +11,7 @@ namespace ForGen
 		public Automata<String> Minimization(Automata<String> Automaton)
 		{
 			AutomataConverter c = new AutomataConverter();
-			return c.NDFAToDFA(c.reverseAutomata(c.NDFAToDFA(c.reverseAutomata(Automaton))));
+			return c.renameStates(c.NDFAToDFA(c.reverseAutomata(c.NDFAToDFA(c.reverseAutomata(Automaton)))));
 		}
 	}
 }
