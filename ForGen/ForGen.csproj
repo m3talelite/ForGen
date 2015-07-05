@@ -52,6 +52,7 @@
     <Compile Include="Grammar.cs" />
     <Compile Include="ProductionRule.cs" />
     <Compile Include="AutomataMinimalization.cs" />
+    <Compile Include="LaTeXGenerator.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

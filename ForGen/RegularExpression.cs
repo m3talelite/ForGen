@@ -122,10 +122,17 @@ namespace ForGen
             return resultLanguage;
         }
 
-		public void regexToNDFA(int depth)
+		public Automata<String> regexToNDFA()
+		{
+			int depth = 0;
+			return regexToNDFA(depth);
+		}
+
+		public Automata<String> regexToNDFA(int depth)
 		{
 			Automata<String> automata = new Automata<String>();
 			regexToNDFA(ref depth, ref automata);
+			return automata;
 		}
 
 		public void regexToNDFA(ref int depth, ref Automata<String> automata, string prevstate=null, string nextstate=null) {
@@ -142,9 +149,10 @@ namespace ForGen
 					String splitstate = depth.ToString();
 					depth++;
 					String lnewstate = splitstate;
-					if (left.terminal.Count() > 0) {
+					if (left.operate == Operator.ONE) {
 						foreach (char s in left.terminal) {
 							automata.addTransition(new Transition<string>(lnewstate, s, depth.ToString()));
+							automata.addToAlphabet(s);
 							lnewstate = depth.ToString(); //NOT PROPERLY IMPLEMENTED BEHAVIOR
 							depth++;
 						}
@@ -163,9 +171,10 @@ namespace ForGen
 					depth++;
 					depth++;
 					String rnewstate = splitstate;
-					if (right.terminal.Count() > 0) {
+					if (right.operate == Operator.ONE) {
 						foreach (char s in right.terminal) {
 							automata.addTransition(new Transition<string>(rnewstate, s, depth.ToString()));
+							automata.addToAlphabet(s);
 							rnewstate = depth.ToString();
 							depth++;
 						}
@@ -197,12 +206,14 @@ namespace ForGen
 						depth++;
 						nonext = true;
 					}
+					depth++;
 					String tmpstate = depth.ToString();
-					if (left.terminal.Count() > 0) {
+					if (left.operate == Operator.ONE) {
 						lnewstate = prevstate;
 						depth++;
 						foreach (char s in left.terminal) {
 							automata.addTransition(new Transition<string>(lnewstate, s, depth.ToString()));
+							automata.addToAlphabet(s);
 							lnewstate = depth.ToString();
 							depth++;
 						}
@@ -210,11 +221,12 @@ namespace ForGen
 					}
 					else
 						left.regexToNDFA(ref depth, ref automata, prevstate, tmpstate);
-					if (right.terminal.Count() > 0) {
+					if (right.operate == Operator.ONE) {
 						lnewstate = tmpstate;
 						depth++;
 						foreach (char s in right.terminal) {
 							automata.addTransition(new Transition<string>(lnewstate, s, depth.ToString()));
+							automata.addToAlphabet(s);
 							lnewstate = depth.ToString();
 							depth++;
 						}
@@ -239,9 +251,10 @@ namespace ForGen
 					lnewstate = depth.ToString();
 					String loldstate = depth.ToString();
 					depth++;
-					if (left.terminal.Count() > 0) {
+					if (left.operate == Operator.ONE) {
 						foreach (char s in left.terminal) {
 							automata.addTransition(new Transition<string>(lnewstate, s, depth.ToString()));
+							automata.addToAlphabet(s);
 							lnewstate = depth.ToString();
 							depth++;
 						}
@@ -273,9 +286,10 @@ namespace ForGen
 					lnewstate = depth.ToString();
 					rnewstate = lnewstate;
 					depth++;
-					if (left.terminal.Count() > 0) {
+					if (left.operate == Operator.ONE) {
 						foreach (char s in left.terminal) {
 							automata.addTransition(new Transition<string>(lnewstate, s, depth.ToString()));
+							automata.addToAlphabet(s);
 							lnewstate = depth.ToString(); //NOT PROPERLY IMPLEMENTED BEHAVIOR
 							depth++;
 						}
