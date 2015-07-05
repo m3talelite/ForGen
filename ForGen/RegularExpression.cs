@@ -149,7 +149,7 @@ namespace ForGen
 					String splitstate = depth.ToString();
 					depth++;
 					String lnewstate = splitstate;
-					if (left.terminal.Count() > 0) {
+					if (left.operate == Operator.ONE) {
 						foreach (char s in left.terminal) {
 							automata.addTransition(new Transition<string>(lnewstate, s, depth.ToString()));
 							automata.addToAlphabet(s);
@@ -171,7 +171,7 @@ namespace ForGen
 					depth++;
 					depth++;
 					String rnewstate = splitstate;
-					if (right.terminal.Count() > 0) {
+					if (right.operate == Operator.ONE) {
 						foreach (char s in right.terminal) {
 							automata.addTransition(new Transition<string>(rnewstate, s, depth.ToString()));
 							automata.addToAlphabet(s);
@@ -206,8 +206,9 @@ namespace ForGen
 						depth++;
 						nonext = true;
 					}
+					depth++;
 					String tmpstate = depth.ToString();
-					if (left.terminal.Count() > 0) {
+					if (left.operate == Operator.ONE) {
 						lnewstate = prevstate;
 						depth++;
 						foreach (char s in left.terminal) {
@@ -220,7 +221,7 @@ namespace ForGen
 					}
 					else
 						left.regexToNDFA(ref depth, ref automata, prevstate, tmpstate);
-					if (right.terminal.Count() > 0) {
+					if (right.operate == Operator.ONE) {
 						lnewstate = tmpstate;
 						depth++;
 						foreach (char s in right.terminal) {
@@ -250,7 +251,7 @@ namespace ForGen
 					lnewstate = depth.ToString();
 					String loldstate = depth.ToString();
 					depth++;
-					if (left.terminal.Count() > 0) {
+					if (left.operate == Operator.ONE) {
 						foreach (char s in left.terminal) {
 							automata.addTransition(new Transition<string>(lnewstate, s, depth.ToString()));
 							automata.addToAlphabet(s);
@@ -285,7 +286,7 @@ namespace ForGen
 					lnewstate = depth.ToString();
 					rnewstate = lnewstate;
 					depth++;
-					if (left.terminal.Count() > 0) {
+					if (left.operate == Operator.ONE) {
 						foreach (char s in left.terminal) {
 							automata.addTransition(new Transition<string>(lnewstate, s, depth.ToString()));
 							automata.addToAlphabet(s);
