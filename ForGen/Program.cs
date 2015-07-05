@@ -56,7 +56,7 @@ namespace ForGen
 
 
 			//TEST CODE FOR Minimalization
-			Tester.generateAutomataImage(Tester.testMinimalization(Tester.TestDFA2()));
+			Tester.generateAutomataImage(Tester.testMinimalization(Tester.TestDFA()));
 
 			/*
 			//TEST CODE FOR PRINTING GRAMMAR
