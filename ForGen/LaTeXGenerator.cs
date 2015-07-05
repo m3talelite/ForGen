@@ -62,7 +62,7 @@ namespace ForGen
 			Tester.generateAutomataImage(Tester.TestDFA(),imagesFolder+"DFA_FOR_MINIMALISE_DFA.pdf","pdf");
 			Tester.generateAutomataImage(m.Minimization(Tester.TestDFA()),imagesFolder+"MINIMALISED_DFA_FOR_MINIMALISE_DFA.pdf","pdf");
 			Tester.generateAutomataImage(c.renameStates(c.NDFAToDFA(tentamenRegex_DFAToGrammar.regexToNDFA())), imagesFolder+"DFA_FOR_DFA_TO_GRAMMAR.pdf","pdf");
-			Tester.generateAutomataImage(c.renameStates(tentamenRegex_NDFAToGrammar.regexToNDFA()), imagesFolder+"DFA_FOR_DFA_TO_GRAMMAR.pdf","pdf");
+			Tester.generateAutomataImage(c.renameStates(tentamenRegex_NDFAToGrammar.regexToNDFA()), imagesFolder+"NDFA_FOR_NDFA_TO_GRAMMAR.pdf","pdf");
 
 			// Add questions to exam string
 			tentamenText += exerciseNDFAToDFA();							//NDFA to DFA
@@ -72,7 +72,7 @@ namespace ForGen
 			tentamenText += exerciseNDFAToRegex();							//NDFA to regex
 			tentamenText += exerciseMinimaliseDFA();						//Minimalise DFA
 			tentamenText += exerciseDFAToGrammar();							//DFA to grammar
-			tentamenText += exerciseDFAToGrammar();							//NDFA to grammar
+			tentamenText += exerciseNDFAToGrammar();						//NDFA to grammar
 
 			// Add answers to exam string
 			tentamenText += answersIntro();
@@ -199,7 +199,7 @@ namespace ForGen
 		private String answerRegexToNDFA()
 		{
 			//DFA_FOR_REGEX_TO_DFA
-			String result = "\\section{Reguliere expressie}\n\\includegraphics[width=\\textwidth,height=0.8\\textheight,keepaspectratio] {DFA_FOR_REGEX_TO_DFA}\\clearpage";
+			String result = "\\section{Reguliere expressie}\n\\includegraphics[width=\\textwidth,height=0.8\\textheight,keepaspectratio] {NDFA_FOR_REGEX_TO_NDFA}\\clearpage";
 			return result;
 		}
 
@@ -236,14 +236,14 @@ namespace ForGen
 		private String answerDFAToRegex(RegularExpression regex)
 		{
 			String result = "\\section{Omzetten naar reguliere expressie}\n\\quote{"+
-				regexStringToLatexString(regex.ToString())+"}";
+				regexStringToLatexString(regex.ToString())+"}\\clearpage";
 			return result;
 		}
 
 		private String answerNDFAToRegex(RegularExpression regex)
 		{
 			String result = "\\section{Omzetten naar reguliere expressie}\n\\quote{"+
-				regexStringToLatexString(regex.ToString())+"}";
+				regexStringToLatexString(regex.ToString())+"}\\clearpage";
 			return result;
 		}
 
