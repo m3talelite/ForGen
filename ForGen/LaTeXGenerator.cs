@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Collections;
+using System.Threading.Tasks;
+using System.Diagnostics;
 using ForGen;
 
 namespace ForGen
@@ -94,6 +96,7 @@ namespace ForGen
 
 			file.Close();
 
+			buildAndOpenLaTeXPDF(currentExamFolder);
 		}
 
 		private String frontpageLatex()
@@ -254,6 +257,58 @@ namespace ForGen
 			result = result.Replace("Ø", "\\O");
 			return result;
 		}
+
+		private void buildAndOpenLaTeXPDF(String latexLocation)
+		{
+			int p = (int) Environment.OSVersion.Platform;
+			if (!((p == 4) || (p == 6) || (p == 128))) // If you're using Windows I feel bad for you son, I support 99 OS's and windows ain't one ( ͡° ͜ʖ ͡°)
+				return;  
+			
+			string executable = "pdflatex";
+			string file_opener = "xdg-open";
+			bool no_open = false;
+			if (latexLocation == "")
+				no_open = true;
+			bool windows = false;
+
+
+			try
+			{
+				ProcessStartInfo startInfo = new ProcessStartInfo();
+				startInfo.CreateNoWindow = false;
+				startInfo.UseShellExecute = false;
+				startInfo.FileName = executable;
+				startInfo.RedirectStandardInput = true;
+				startInfo.WorkingDirectory = latexLocation ;
+				startInfo.WindowStyle = ProcessWindowStyle.Hidden;
+				//				startInfo.Arguments = "proeftentamen.tex"; 
+
+				Process exeProcess = new Process();
+				exeProcess.StartInfo = startInfo;
+				exeProcess.Start ();
+				//exeProcess.WaitForInputIdle();
+				StreamWriter writer  = exeProcess.StandardInput;
+				writer.Write ("proeftentamen.tex");
+				writer.Flush ();
+				writer.WriteLine ();
+				if(!windows)
+					exeProcess.WaitForInputIdle();
+				writer.Close ();
+				exeProcess.WaitForExit();
+				if (!no_open){
+					Process openProcess = new Process();
+					openProcess.StartInfo.FileName = file_opener;
+					Console.WriteLine(latexLocation+"proeftentamen.pdf");
+					openProcess.StartInfo.Arguments = latexLocation+"proeftentamen.pdf";
+					openProcess.Start();
+				}
+			}
+			catch
+			{
+				Console.Write("Random exception");
+			}
+		}
 	}
+
 }
 
