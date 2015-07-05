@@ -21,8 +21,10 @@ namespace ForGen
 			Tester.testConverter(Tester.TestNDFA2());
 			*/
 			//TEST CODE FOR CHECKING IF STRING IS ACCEPTED BY DFA/NDFA
-			bool test = Tester.TestNDFA().acceptString("aab");
-			Tester.generateAutomataImage(Tester.TestNDFA());
+//			bool test = Tester.TestNDFA2().acceptString("a");
+			bool test2 = Tester.TestNDFA2().isStringAccepted("bbbbbbbbbbbbbbbbbbbbacd");
+			Tester.generateAutomataImage(Tester.TestNDFA2());
+			Console.WriteLine("String accepted: " + test2.ToString());
 			/*
 			//TEST CODE FOR GENERATING IMAGES
 			Tester.generateAutomataImage(Tester.TestDFA());

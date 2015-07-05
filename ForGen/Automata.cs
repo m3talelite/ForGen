@@ -45,48 +45,31 @@ namespace ForGen
 			this.setAlphabet(symbols);
 		}
 
-		public bool acceptString(string input)
+
+
+		public bool isStringAccepted(String testString)
 		{
-			foreach (T start in startStates) {
-				foreach(Transition<T> transition in transitions) {
-					if (transition.fromState.ToString() == start.ToString()) {
-						if (acceptStringPath(input, transition) == true)
-							return true; // any correct path is good
-					}
+			bool result = false;
+			SortedSet<T> currentStates = new SortedSet<T>();
+			SortedSet<T> tempCurrentStates = new SortedSet<T>();
+			currentStates.Add(startStates.First());
+			foreach (char character in testString) {
+				tempCurrentStates.Clear();
+				foreach (T state in currentStates) {
+					tempCurrentStates.UnionWith(getToStates(state, character));
+				}
+				currentStates.Clear();
+				foreach (T state in tempCurrentStates) {
+					currentStates.Add(state);
 				}
 			}
-			return false; // end of paths --- no correct path was found
-		}
-
-		public bool acceptStringPath(string input, Transition<T> prevtransistion)
-		{
-			if (prevtransistion.symbol == Transition<T>.EPSILON) {
-				foreach (Transition<T> transition in transitions) {
-					if (transition.fromState.ToString() == prevtransistion.toState.ToString()) {
-						if (acceptStringPath(input, transition) == true)
-							return true; //any correct path is good
-					}
-				}
-			} else if (prevtransistion.symbol == input.First()) {
-				if (input.Length == 0) {
-					foreach (T fstate in finalStates) {
-						if (fstate.ToString() == prevtransistion.toState.ToString()) // if the last state we were sent to is final and the string is fully consumed we have reached a acceptence
-							return true;
-					}
-					return false; // if the string is consumed and the last state was not final we were not accepted
-				}
-				return true; //
-				string newinput = input.Remove(0, 1);
-				foreach (Transition<T> transition in transitions) {
-					if (transition.fromState.ToString() == prevtransistion.toState.ToString()) {
-						if (acceptStringPath(newinput, transition) == true)
-							return true; //any correct path is good
-					}
-				}
+			foreach(T state in currentStates)
+			{
+				if (getFinalStates().Contains(state))
+					result = true;
 			}
-			return false; // end of paths -- no correct path was found
+			return result;
 		}
-
 
 		public void setAlphabet(char [] s){
 			this.setAlphabet(new SortedSet<char>((s)));
