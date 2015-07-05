@@ -20,22 +20,25 @@ namespace ForGen
 			return m.Minimization(automata);
 		}
 
-		static public void generateAutomataImage(Automata<String> automata, string output_file="")
+		static public void generateAutomataImage(Automata<String> automata, string output_file="", string fileformat="svg")
 		{
 			string executable_file = "";
 			string file_opener = "";
+			bool no_open = false;
+			if (output_file != "")
+				no_open = true;
             bool windows = false;
 			int p = (int) Environment.OSVersion.Platform;
 			if ((p == 4) || (p == 6) || (p == 128)) { //UNIX
 				if (output_file=="")
-					output_file = "/tmp/tmp.svg";
+					output_file = "/tmp/tmp."+fileformat;
 				executable_file = "dot";
 				file_opener = "xdg-open";
 			} else {
                 windows = true;
 				if (output_file == "") {
 					output_file = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
-					output_file = output_file + "\\img.svg";
+					output_file = output_file + "\\img."+fileformat;
 				}
 				executable_file = "C:\\Program Files (x86)\\Graphviz2.38\\bin\\dot.exe";
 			}
@@ -50,7 +53,7 @@ namespace ForGen
 				startInfo.FileName = executable_file;
 				startInfo.RedirectStandardInput = true;
 				startInfo.WindowStyle = ProcessWindowStyle.Hidden;
-				startInfo.Arguments = "  -Tsvg -o " + output_file;
+				startInfo.Arguments = "  -T"+ fileformat +" -o " + output_file;
 
 				Process exeProcess = new Process();
 				exeProcess.StartInfo = startInfo;
@@ -64,17 +67,19 @@ namespace ForGen
     				exeProcess.WaitForInputIdle();
 				writer.Close ();
 				exeProcess.WaitForExit();
-                if (!windows)
-                {
-                    Process openProcess = new Process();
-                    openProcess.StartInfo.FileName = file_opener;
-                    openProcess.StartInfo.Arguments = output_file;
-                    openProcess.Start();
-                }
-                else
-                {
-                    Process.Start(output_file);
-                }
+				if (!no_open){
+	                if (!windows)
+	                {
+	                    Process openProcess = new Process();
+	                    openProcess.StartInfo.FileName = file_opener;
+	                    openProcess.StartInfo.Arguments = output_file;
+	                    openProcess.Start();
+	                }
+	                else
+	                {
+	                    Process.Start(output_file);
+					}
+				}
 			}
 			catch
 			{
