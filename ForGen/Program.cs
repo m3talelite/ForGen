@@ -38,7 +38,7 @@ namespace ForGen
 						break;
 					case 9:
 						Console.Clear();
-						Console.WriteLine("Tot ziens!");
+						Console.WriteLine("( ͡° ͜ʖ ͡°)( ͡° ͜ʖ ͡°)( ͡° ͜ʖ ͡°)( ͡° ͜ʖ ͡°)( ͡° ͜ʖ ͡°)( ͡° ͜ʖ ͡°)( ͡° ͜ʖ ͡°)( ͡° ͜ʖ ͡°)( ͡° ͜ʖ ͡°)( ͡° ͜ʖ ͡°)");
 						break;
 					default:
 						Console.WriteLine("Deze optie is niet beschikbaar." +
