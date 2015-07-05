@@ -39,7 +39,6 @@ namespace ForGen
 			}
             
 			string dotinfo = automata.printGraphviz();
-			Console.WriteLine(dotinfo);
 			try
 			{
 				ProcessStartInfo startInfo = new ProcessStartInfo();
@@ -139,7 +138,6 @@ namespace ForGen
 			// final states:
 			m.defineAsFinalState("q1");
 			m.defineAsFinalState("q3");
-
 			m.defineAsFinalState("q4");
 			m.defineAsFinalState("q6");
 			return m;
@@ -152,9 +150,9 @@ namespace ForGen
 			m.addTransition( new Transition<String> ("2", 'b', "2") );
 
 			m.addTransition( new Transition<String> ("2", 'b', "4") );
-			m.addTransition( new Transition<String> ("1", '$', "3") );
+			m.addTransition( new Transition<String> ("1", 'a', "3") );
 
-			m.addTransition( new Transition<String> ("3", '$', "2") );
+			m.addTransition( new Transition<String> ("3", 'a', "2") );
 			m.addTransition( new Transition<String> ("3", 'a', "4") );
 
 			m.addTransition( new Transition<String> ("4", 'a', "3") );

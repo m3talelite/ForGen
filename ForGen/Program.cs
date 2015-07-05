@@ -10,12 +10,230 @@ namespace ForGen
 {
     class Program
     {
-        static void Main(string[] args)
+
+		static void Main()
+		{
+			Console.WriteLine("1. NDFA/DFA -> reguliere grammatica" +
+				Environment.NewLine + "2. Reguliere Expressie -> NDFA"+
+				Environment.NewLine + "3. NDFA -> DFA"+
+				Environment.NewLine + "4. Minimalisatie DFA"+
+				Environment.NewLine + "9. Afsluiten");
+			var ans = Console.ReadLine();
+			int choice=0;
+			if (int.TryParse(ans, out choice))
+			{
+				switch (choice)
+				{
+					case 1:
+						NdfaDfaToGrammar();
+						break;
+					case 2:
+						RegExToNdfaDfa();
+						break;
+					case 3:
+						NdfaToDfa();
+						break;
+					case 4:
+						Minimalization();
+						break;
+					case 9:
+						Console.Clear();
+						Console.WriteLine("Tot ziens!");
+						break;
+					default:
+						Console.WriteLine("Deze optie is niet beschikbaar." +
+							Environment.NewLine + "Druk op een knop om te sluiten");
+						Console.ReadKey();
+						break;
+				}
+			}
+			else
+			{
+				Console.WriteLine("Vul alstublieft het nummer van de keuze in."+
+					Environment.NewLine + "Druk op een knop om te sluiten");
+				Console.ReadKey();
+			}
+		}
+
+		static public void NdfaDfaToGrammar(){
+			Console.Clear();
+			Console.WriteLine("1. NDFA -> reguliere grammatica" +
+			Environment.NewLine + "2. DFA -> reguliere grammatica");
+			var ans = Console.ReadLine();
+			int choice=0;
+			if (int.TryParse(ans, out choice))
+			{
+				switch (choice)
+				{
+					case 1:
+						Console.Clear();
+						Tester.generateAutomataImage(Tester.TestNDFA2());
+						Console.Write(Tester.TestNDFA2().getGrammar().toBeautifulString());
+						ResetToMenu();
+						break;
+					case 2:
+						Console.Clear();
+						Tester.generateAutomataImage(Tester.TestDFA());
+						Console.WriteLine(Tester.TestDFA().getGrammar().toBeautifulString());
+						ResetToMenu();
+						break;
+					default:
+						Console.WriteLine("Deze optie is niet beschikbaar." +
+						Environment.NewLine + "Druk op een knop om terug te gaan");
+						ResetToMenu();
+						break;
+				}
+			}
+			else
+			{
+				Console.WriteLine("Vul alstublieft het nummer van de keuze in."+
+					Environment.NewLine + "Druk op een knop om terug te gaan");
+				ResetToMenu();
+			}
+		}
+
+		static public void NdfaToDfa(){
+			Console.Clear();
+			Console.WriteLine("1. NDFA -> DFA (zonder Epsilon)" +
+				Environment.NewLine + "2. NDFA -> DFA (met Epsilon)");
+			var ans = Console.ReadLine();
+
+			AutomataConverter c = new AutomataConverter();
+
+			int choice=0;
+			if (int.TryParse(ans, out choice))
+			{
+				switch (choice)
+				{
+					case 1:
+						Console.Clear();
+						Automata<string> a = Tester.TestNDFA();
+						Console.WriteLine("De volgende NDFA:");
+						a.printTransitions();
+						Tester.generateAutomataImage(a);
+						Console.WriteLine("is deze DFA: (Druk op een knop)");
+						Console.ReadLine();
+						c.NDFAToDFA(a).printTransitions();
+						Tester.generateAutomataImage(c.NDFAToDFA(a));
+						ResetToMenu();
+						break;
+					case 2:
+						Console.Clear();
+						Automata<string> b = Tester.TestNDFA2();
+						Console.WriteLine("De volgende NDFA:");
+						b.printTransitions();
+						Tester.generateAutomataImage(b);
+						Console.WriteLine("is deze DFA: (Druk op een knop)");
+						Console.ReadLine();
+						c.NDFAToDFA(b).printTransitions();
+						Tester.generateAutomataImage(c.NDFAToDFA(b));
+						ResetToMenu();
+						break;
+					default:
+						Console.WriteLine("Deze optie is niet beschikbaar." +
+							Environment.NewLine + "Druk op een knop om terug te gaan");
+						ResetToMenu();
+						break;
+				}
+			}
+			else
+			{
+				Console.WriteLine("Vul alstublieft het nummer van de keuze in."+
+					Environment.NewLine + "Druk op een knop om terug te gaan");
+				ResetToMenu();
+			}
+		}
+
+		static public void RegExToNdfaDfa(){
+			Console.Clear();
+			Console.WriteLine("1. RegEx -> NDFA");
+			var ans = Console.ReadLine();
+			int choice=0;
+			Automata<String> auto = new Automata<String>();
+			int num = 0;
+			if (int.TryParse(ans, out choice))
+			{
+				switch (choice)
+				{
+					case 1:
+						Console.Clear();
+						char[] alfabet = { 'a', 'b', 'c' };
+						RegularExpression b = Tester.generateRandomRegex(alfabet, 5);
+						Console.WriteLine(b.ToString() +
+							Environment.NewLine + "Geeft:");
+						b.regexToNDFA(ref num, ref auto);
+						auto.printTransitions();
+						Tester.generateAutomataImage(auto);
+						ResetToMenu();
+						break;
+					default:
+						Console.WriteLine("Deze optie is niet beschikbaar." +
+							Environment.NewLine + "Druk op een knop om terug te gaan");
+						ResetToMenu();
+						break;
+				}
+			}
+			else
+			{
+				Console.WriteLine("Vul alstublieft het nummer van de keuze in."+
+					Environment.NewLine + "Druk op een knop om terug te gaan");
+				ResetToMenu();
+			}
+		}
+
+		static public void Minimalization(){
+			Console.Clear();
+			Console.WriteLine("1. Minimalization DFA");
+			var ans = Console.ReadLine();
+			AutomataMinimalization m = new AutomataMinimalization();
+			int choice=0;
+			if (int.TryParse(ans, out choice))
+			{
+				switch (choice)
+				{
+					case 1:
+						Console.Clear();
+						Automata<string> a = Tester.TestDFA2 ();
+						Console.WriteLine("De volgende DFA: ");
+						a.printTransitions();
+						Tester.generateAutomataImage(a);
+						Console.WriteLine("Is in Minimalisatie: (druk op een knop)");
+						Console.ReadLine();
+						Automata<String> mini = m.Minimization(a);
+						mini.printTransitions();
+						Tester.generateAutomataImage(mini);
+						ResetToMenu();
+						break;
+					default:
+						Console.WriteLine("Deze optie is niet beschikbaar." +
+							Environment.NewLine + "Druk op een knop om terug te gaan");
+						ResetToMenu();
+						break;
+				}
+			}
+			else
+			{
+				Console.WriteLine("Vul alstublieft het nummer van de keuze in."+
+					Environment.NewLine + "Druk op een knop om terug te gaan");
+				ResetToMenu();
+			}
+		}
+
+
+		static public void ResetToMenu(){
+			Console.WriteLine("Druk op een knop om terug te gaan naar het hoofd menu");
+			Console.ReadKey();
+			Console.Clear();
+			Main();
+		}
+
+        static void OldMain(string[] args)
         {
 
 			Console.WriteLine("Programme started on "+DateTime.Now.ToString("hh:mm:ss.fff"));
 			Console.ReadLine();
-			/* 
+
+			/*
 			//TEST CODE FOR CONVERTER
 			Tester.testConverter(Tester.TestNDFA());
 			Tester.testConverter(Tester.TestNDFA2());
