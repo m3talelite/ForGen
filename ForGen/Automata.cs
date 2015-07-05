@@ -142,7 +142,7 @@ namespace ForGen
 			foreach (T state in this.getStates()) {
 				foreach (var letter in getAlphabet()) {
 					foreach (var item in getToStates(state, letter)) {
-						ProductionRule<T> productRule = new ProductionRule<T>(state, letter, item);
+						ProductionRule<T> productRule = new ProductionRule<T>(state, char.ToUpper(letter), item);
 						productionRules.Add(productRule);
 					}
 				}
