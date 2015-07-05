@@ -236,13 +236,6 @@ namespace ForGen
 			return m;
 		}
 
-        public static Automata<String> testInverse(Automata<String> automata)
-        {
-            AutomataConverter c = new AutomataConverter();
-            Automata<String> a = c.inverseAutomata(automata);
-            return a;
-        }
-
         public static Automata<String> testReverse(Automata<String> automata)
         {
             AutomataConverter c = new AutomataConverter();

@@ -17,7 +17,8 @@ namespace ForGen
 				Environment.NewLine + "2. Reguliere Expressie -> NDFA"+
 				Environment.NewLine + "3. NDFA -> DFA"+
 				Environment.NewLine + "4. Minimalisatie DFA"+
-				Environment.NewLine + "5. Generate tentame"+
+				Environment.NewLine + "5. Genereer oefententamen"+
+
 				Environment.NewLine + "6. Woorden generator"+
 				Environment.NewLine + "9. Afsluiten");
 			var ans = Console.ReadLine();
@@ -229,7 +230,7 @@ namespace ForGen
 
 		static public void GenerateTentame(){
 			Console.Clear();
-			Console.WriteLine("1. Generate Tentame");
+			Console.WriteLine("1. Genereer oefententamen");
 			var ans = Console.ReadLine();
 			int choice=0;
 			if (int.TryParse(ans, out choice))
