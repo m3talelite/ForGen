@@ -20,7 +20,9 @@ namespace ForGen
 			Tester.testConverter(Tester.TestNDFA());
 			Tester.testConverter(Tester.TestNDFA2());
 			*/
-
+			//TEST CODE FOR CHECKING IF STRING IS ACCEPTED BY DFA/NDFA
+			bool test = Tester.TestNDFA().acceptString("aab");
+			Tester.generateAutomataImage(Tester.TestNDFA());
 			/*
 			//TEST CODE FOR GENERATING IMAGES
 			Tester.generateAutomataImage(Tester.TestDFA());
@@ -56,7 +58,7 @@ namespace ForGen
 
 
 			//TEST CODE FOR Minimalization
-			Tester.generateAutomataImage(Tester.testMinimalization(Tester.TestDFA2()));
+			//Tester.generateAutomataImage(Tester.testMinimalization(Tester.TestDFA2()));
 
 			/*
 			//TEST CODE FOR PRINTING GRAMMAR
