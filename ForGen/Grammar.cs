@@ -98,5 +98,31 @@ namespace ForGen
 
 			return description += "\n";
 		}
+
+		public String toBeautifulLatexString()
+		{
+			String description = "";
+			description  = "G = {N, S, P, "+ startSymbol.ToString() +" }\n\\\\";
+			description += "N = "+ printHelpSymbols(helpSymbols()) +" \n\\\\";
+			description += "S = "+ printAlphabet(alphabet()) + " \n\\\\";
+
+			T tempChecker = default(T);
+			foreach (ProductionRule<T> p in productionRules)
+			{
+				if (tempChecker==null) {
+					tempChecker =  p.getLeft();
+					description += p.toString();
+				}
+
+				else if (p.getLeft().CompareTo(tempChecker)!=0) {
+					tempChecker =  p.getLeft();
+					description += "\n\\\\"+ p.toString();
+				}
+				else
+					description += p.toShortString();
+			}
+
+			return description += "\n\\\\";
+		}
 	}
 }

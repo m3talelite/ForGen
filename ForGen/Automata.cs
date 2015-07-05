@@ -22,7 +22,7 @@ namespace ForGen
 			this.states = new SortedSet<T>();
 			this.startStates = new SortedSet<T>();
 			this.finalStates = new SortedSet<T>();
-			this.setAlphabet(symbols);
+			this.setAlphabet(new SortedSet<char>());
 		}
 		public Automata(Automata<T> autom)
 		{
@@ -55,6 +55,10 @@ namespace ForGen
 
 		public SortedSet<char> getAlphabet(){
 			return symbols;
+		}
+
+		public void addToAlphabet(char Char) {
+			symbols.Add(Char);
 		}
 
 		public void addTransition(Transition<T> t){
