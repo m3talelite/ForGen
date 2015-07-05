@@ -39,17 +39,36 @@ namespace ForGen
 
 			AutomataConverter c = new AutomataConverter();
 
+			// defining regexes
+			char[] alfabet = {'a', 'b'};
+			RegularExpression tentamenRegex_regexDFA = Tester.generateRandomRegex(alfabet, 2);
+			RegularExpression tentamenRegex_regexNDFA = Tester.generateRandomRegex(alfabet, 2);
+			RegularExpression tentamenRegex_DFAregex = Tester.generateRandomRegex(alfabet, 2);
+			RegularExpression tentamenRegex_NDFAregex = Tester.generateRandomRegex(alfabet, 2);
+
 			// Generating exam images
 			Tester.generateAutomataImage(Tester.TestNDFA2(),imagesFolder+"NDFA_FOR_NDFA_TO_DFA.pdf","pdf");
 			Tester.generateAutomataImage(c.NDFAToDFA(Tester.TestNDFA2()),imagesFolder+"DFA_FOR_NDFA_TO_DFA.pdf","pdf");
-
+			Tester.generateAutomataImage(c.NDFAToDFA(tentamenRegex_regexDFA.regexToNDFA()),imagesFolder+"DFA_FOR_REGEX_TO_DFA.pdf","pdf");
+			Tester.generateAutomataImage(tentamenRegex_regexNDFA.regexToNDFA(),imagesFolder+"NDFA_FOR_REGEX_TO_NDFA.pdf","pdf");
+			Tester.generateAutomataImage(c.NDFAToDFA(tentamenRegex_DFAregex.regexToNDFA()),imagesFolder+"DFA_FOR_DFA_TO_REGEX.pdf","pdf");
+			Tester.generateAutomataImage(tentamenRegex_NDFAregex.regexToNDFA(),imagesFolder+"NDFA_FOR_NDFA_TO_REGEX.pdf","pdf");
 			// Add questions to exam string
+
+
 			tentamenText += exerciseNDFAToDFA();
+			tentamenText += exerciseRegexToDFA(tentamenRegex_regexDFA);
+			tentamenText += exerciseRegexToNDFA(tentamenRegex_regexNDFA);
+			tentamenText += exerciseDFAToRegex();
+			tentamenText += exerciseNDFAToRegex();
 
 			// Add answers to exam string
 			tentamenText += answersIntro();
-
 			tentamenText += answerNDFAToDFA();
+			tentamenText += answerRegexToDFA();
+			tentamenText += answerRegexToNDFA();
+			tentamenText += answerDFAToRegex(tentamenRegex_DFAregex);
+			tentamenText += answerNDFAToRegex(tentamenRegex_NDFAregex);
 
 			// End exam string
 			tentamenText += endOfDocument();
