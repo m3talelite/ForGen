@@ -17,6 +17,7 @@ namespace ForGen
 				Environment.NewLine + "2. Reguliere Expressie -> NDFA"+
 				Environment.NewLine + "3. NDFA -> DFA"+
 				Environment.NewLine + "4. Minimalisatie DFA"+
+				Environment.NewLine + "5. Generate tentame"+
 				Environment.NewLine + "9. Afsluiten");
 			var ans = Console.ReadLine();
 			int choice=0;
@@ -35,6 +36,9 @@ namespace ForGen
 						break;
 					case 4:
 						Minimalization();
+						break;
+					case 5:
+						GenerateTentame();
 						break;
 					case 9:
 						Console.Clear();
@@ -219,6 +223,35 @@ namespace ForGen
 			}
 		}
 
+		static public void GenerateTentame(){
+			Console.Clear();
+			Console.WriteLine("1. Generate Tentame");
+			var ans = Console.ReadLine();
+			int choice=0;
+			if (int.TryParse(ans, out choice))
+			{
+				switch (choice)
+				{
+					case 1:
+						Console.Clear();
+						LaTeXGenerator g = new LaTeXGenerator();
+						g.generateLaTeXExam();
+						ResetToMenu();
+						break;
+					default:
+						Console.WriteLine("Deze optie is niet beschikbaar." +
+							Environment.NewLine + "Druk op een knop om terug te gaan");
+						ResetToMenu();
+						break;
+				}
+			}
+			else
+			{
+				Console.WriteLine("Vul alstublieft het nummer van de keuze in."+
+					Environment.NewLine + "Druk op een knop om terug te gaan");
+				ResetToMenu();
+			}
+		}
 
 		static public void ResetToMenu(){
 			Console.WriteLine("Druk op een knop om terug te gaan naar het hoofd menu");
