@@ -159,8 +159,7 @@ namespace ForGen
 			Automata<String> reversedAutomaton = new Automata<string>(automaton.getAlphabet());
 
 			foreach (Transition<String> transition in automaton.getTransitions()) {
-				transition.reverseFromToState();
-				reversedAutomaton.addTransition(transition);
+				reversedAutomaton.addTransition(new Transition<String> (transition.getToState(), transition.getSymbol(), transition.getFromState()));
 			}
 
 			foreach (String state in automaton.getFinalStates()) {
@@ -169,10 +168,6 @@ namespace ForGen
 
 			foreach (String state in automaton.getStartStates()) {
 				reversedAutomaton.defineAsFinalState(state);
-			}
-
-			foreach (String state in automaton.getFinalStates()) {
-				reversedAutomaton.addTransition(new Transition<string>(reversedAutomaton.getStartStates().First(), state));
 			}
 
 			return reversedAutomaton;
