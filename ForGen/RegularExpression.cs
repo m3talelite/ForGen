@@ -143,6 +143,8 @@ namespace ForGen
 				depth+=2;
 			}
 			//depth += 1;
+			bool nonext = false;
+
 			switch (operate) {
 				case Operator.OR:
 					automata.addTransition(new Transition<string>(prevstate, depth.ToString()));
@@ -200,7 +202,7 @@ namespace ForGen
 						
 					break;
 				case Operator.DOT:
-					bool nonext = false;
+					
 					if (nextstate == null) {
 						nextstate = depth.ToString();
 						depth++;
