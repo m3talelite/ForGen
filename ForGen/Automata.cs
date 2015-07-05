@@ -128,7 +128,7 @@ namespace ForGen
 
 			graphviz = graphviz + "node [shape = doublecircle]; ";
 			foreach (T t in finalStates) {
-				graphviz = graphviz + t + ' ';
+				graphviz = graphviz + '"' + t + '"' + ' ';
 			}
 			if (finalStates.Count>0)
 				graphviz = graphviz +";\n"; //todo check if endstate
@@ -139,7 +139,7 @@ namespace ForGen
 			}
 			if (startStates.Count > 0) {
 				graphviz = graphviz + "node [shape = point ]; qi\nqi -> ";
-				graphviz = graphviz + startStates.First();
+				graphviz = graphviz +  '"' + startStates.First() + '"';
 				graphviz = graphviz + " ;\n";
 			}
 			graphviz = graphviz +"}";
