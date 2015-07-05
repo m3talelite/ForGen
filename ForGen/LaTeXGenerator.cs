@@ -1,6 +1,7 @@
 ﻿using System;
 using System.IO;
 using System.Collections;
+using ForGen;
 
 namespace ForGen
 {
@@ -38,6 +39,7 @@ namespace ForGen
 			System.IO.Directory.CreateDirectory(imagesFolder);
 
 			AutomataConverter c = new AutomataConverter();
+			AutomataMinimalization m = new AutomataMinimalization();
 
 			// defining regexes
 			char[] alfabet = {'a', 'b'};
@@ -45,22 +47,30 @@ namespace ForGen
 			RegularExpression tentamenRegex_regexNDFA = Tester.generateRandomRegex(alfabet, 2);
 			RegularExpression tentamenRegex_DFAregex = Tester.generateRandomRegex(alfabet, 2);
 			RegularExpression tentamenRegex_NDFAregex = Tester.generateRandomRegex(alfabet, 2);
+			RegularExpression tentamenRegex_DFAToGrammar = Tester.generateRandomRegex(alfabet, 2);
+			RegularExpression tentamenRegex_NDFAToGrammar = Tester.generateRandomRegex(alfabet, 2);
 
 			// Generating exam images
 			Tester.generateAutomataImage(Tester.TestNDFA2(),imagesFolder+"NDFA_FOR_NDFA_TO_DFA.pdf","pdf");
 			Tester.generateAutomataImage(c.NDFAToDFA(Tester.TestNDFA2()),imagesFolder+"DFA_FOR_NDFA_TO_DFA.pdf","pdf");
-			Tester.generateAutomataImage(c.NDFAToDFA(tentamenRegex_regexDFA.regexToNDFA()),imagesFolder+"DFA_FOR_REGEX_TO_DFA.pdf","pdf");
-			Tester.generateAutomataImage(tentamenRegex_regexNDFA.regexToNDFA(),imagesFolder+"NDFA_FOR_REGEX_TO_NDFA.pdf","pdf");
-			Tester.generateAutomataImage(c.NDFAToDFA(tentamenRegex_DFAregex.regexToNDFA()),imagesFolder+"DFA_FOR_DFA_TO_REGEX.pdf","pdf");
-			Tester.generateAutomataImage(tentamenRegex_NDFAregex.regexToNDFA(),imagesFolder+"NDFA_FOR_NDFA_TO_REGEX.pdf","pdf");
+			Tester.generateAutomataImage(c.renameStates(c.NDFAToDFA(tentamenRegex_regexDFA.regexToNDFA())),imagesFolder+"DFA_FOR_REGEX_TO_DFA.pdf","pdf");
+			Tester.generateAutomataImage(c.renameStates(tentamenRegex_regexNDFA.regexToNDFA()),imagesFolder+"NDFA_FOR_REGEX_TO_NDFA.pdf","pdf");
+			Tester.generateAutomataImage(c.renameStates(c.NDFAToDFA(tentamenRegex_DFAregex.regexToNDFA())),imagesFolder+"DFA_FOR_DFA_TO_REGEX.pdf","pdf");
+			Tester.generateAutomataImage(c.renameStates(tentamenRegex_NDFAregex.regexToNDFA()),imagesFolder+"NDFA_FOR_NDFA_TO_REGEX.pdf","pdf");
+			Tester.generateAutomataImage(Tester.TestDFA(),imagesFolder+"DFA_FOR_MINIMALISE_DFA.pdf","pdf");
+			Tester.generateAutomataImage(m.Minimization(Tester.TestDFA()),imagesFolder+"MINIMALISED_DFA_FOR_MINIMALISE_DFA.pdf","pdf");
+			Tester.generateAutomataImage(c.renameStates(c.NDFAToDFA(tentamenRegex_DFAToGrammar.regexToNDFA())), imagesFolder+"DFA_FOR_DFA_TO_GRAMMAR.pdf","pdf");
+			Tester.generateAutomataImage(c.renameStates(tentamenRegex_NDFAToGrammar.regexToNDFA()), imagesFolder+"DFA_FOR_DFA_TO_GRAMMAR.pdf","pdf");
+
 			// Add questions to exam string
-
-
-			tentamenText += exerciseNDFAToDFA();
-			tentamenText += exerciseRegexToDFA(tentamenRegex_regexDFA);
-			tentamenText += exerciseRegexToNDFA(tentamenRegex_regexNDFA);
-			tentamenText += exerciseDFAToRegex();
-			tentamenText += exerciseNDFAToRegex();
+			tentamenText += exerciseNDFAToDFA();							//NDFA to DFA
+			tentamenText += exerciseRegexToDFA(tentamenRegex_regexDFA);		//Regex to DFA
+			tentamenText += exerciseRegexToNDFA(tentamenRegex_regexNDFA);	//Regex to NDFA
+			tentamenText += exerciseDFAToRegex();							//DFA to regex
+			tentamenText += exerciseNDFAToRegex();							//NDFA to regex
+			tentamenText += exerciseMinimaliseDFA();						//Minimalise DFA
+			tentamenText += exerciseDFAToGrammar();							//DFA to grammar
+			tentamenText += exerciseDFAToGrammar();							//NDFA to grammar
 
 			// Add answers to exam string
 			tentamenText += answersIntro();
@@ -69,6 +79,9 @@ namespace ForGen
 			tentamenText += answerRegexToNDFA();
 			tentamenText += answerDFAToRegex(tentamenRegex_DFAregex);
 			tentamenText += answerNDFAToRegex(tentamenRegex_NDFAregex);
+			tentamenText += answerMinimaliseDFA();
+			tentamenText += answerDFAToGrammar(c.renameStates(c.NDFAToDFA(tentamenRegex_DFAToGrammar.regexToNDFA())));
+			tentamenText += answerNDFAToGrammar(c.renameStates(c.NDFAToDFA(tentamenRegex_NDFAToGrammar.regexToNDFA())));
 
 			// End exam string
 			tentamenText += endOfDocument();
@@ -110,17 +123,17 @@ namespace ForGen
 
 		private String exerciseRegexToDFA(RegularExpression regex)
 		{
-			String result = "\\section{Reguliere expressie}\nGeef de DFA van de onderstaande reguliere expressie:" +
+			String result = "\\section{Reguliere expressie}\nGeef de DFA van de onderstaande reguliere expressie:\\\\\\quote{" +
 				regexStringToLatexString(regex.ToString())
-				+"\\clearpage";
+				+"}\\clearpage";
 			return result;
 		}
 
 		private String exerciseRegexToNDFA(RegularExpression regex)
 		{
-			String result = "\\section{Reguliere expressie}\nGeef de NDFA van de onderstaande reguliere expressie:" +
+			String result = "\\section{Reguliere expressie}\nGeef de NDFA van de onderstaande reguliere expressie:\\\\\\quote{" +
 				regexStringToLatexString(regex.ToString())
-				+"\\clearpage";
+				+"}\\clearpage";
 			return result;
 		}
 
@@ -201,31 +214,33 @@ namespace ForGen
 			return result;
 		}
 
-		private String answerDFAToGrammar()
+		private String answerDFAToGrammar(Automata<String> automaton)
 		{
-			//DFA_GRAMMAR_FOR_DFA_TO_GRAMMAR
-			String result = "\\section{Grammatica}\n\\includegraphics[width=\\textwidth,height=0.8\\textheight,keepaspectratio] {DFA_GRAMMAR_FOR_DFA_TO_GRAMMAR}\n\n\\clearpage";
+			String result = "\\section{Grammatica}\n" +
+				regexStringToLatexString((automaton.getGrammar().toBeautifulLatexString()))
+				+"\n\n\\clearpage";
 			return result;
 		}
 
-		private String answerNDFAToGrammar()
+		private String answerNDFAToGrammar(Automata<String> automaton)
 		{
-			//NDFA_GRAMMAR_FOR_NDFA_TO_GRAMMAR
-			String result = "\\section{Grammatica}\n\\includegraphics[width=\\textwidth,height=0.8\\textheight,keepaspectratio] {NDFA_GRAMMAR_FOR_NDFA_TO_GRAMMAR}\n\n\\clearpage";
+			String result = "\\section{Grammatica}\n" +
+				regexStringToLatexString((automaton.getGrammar().toBeautifulLatexString()))
+				+"\n\n\\clearpage";
 			return result;
 		}
 
 		private String answerDFAToRegex(RegularExpression regex)
 		{
-			String result = "\\section{Omzetten naar reguliere expressie}"+
-				regexStringToLatexString(regex.ToString());
+			String result = "\\section{Omzetten naar reguliere expressie}\n\\quote{"+
+				regexStringToLatexString(regex.ToString())+"}";
 			return result;
 		}
 
 		private String answerNDFAToRegex(RegularExpression regex)
 		{
-			String result = "\\section{Omzetten naar reguliere expressie}"+
-				regexStringToLatexString(regex.ToString());
+			String result = "\\section{Omzetten naar reguliere expressie}\n\\quote{"+
+				regexStringToLatexString(regex.ToString())+"}";
 			return result;
 		}
 
@@ -235,6 +250,8 @@ namespace ForGen
 			result = regexString.Replace("|", "$\\arrowvert$");
 			result = result.Replace("+", "$^+$");
 			result = result.Replace("*", "$^*$");
+			result = result.Replace("-->", "$\\rightarrow$");
+			result = result.Replace("Ø", "\\O");
 			return result;
 		}
 	}
