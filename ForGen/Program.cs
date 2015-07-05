@@ -18,7 +18,6 @@ namespace ForGen
 				Environment.NewLine + "3. NDFA -> DFA"+
 				Environment.NewLine + "4. Minimalisatie DFA"+
 				Environment.NewLine + "5. Genereer oefententamen"+
-
 				Environment.NewLine + "6. Woorden generator"+
 				Environment.NewLine + "9. Afsluiten");
 			var ans = Console.ReadLine();

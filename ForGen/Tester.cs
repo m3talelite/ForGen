@@ -272,6 +272,7 @@ namespace ForGen
 			all = exp3.dot(exp4.dot(exp5));
 			why = new RegularExpression("baa").plus().star().plus();
 
+
 				
 			foreach (String o in all.getLanguage(5))
 			{
@@ -387,6 +388,7 @@ namespace ForGen
 				Console.Write(o + " ");
 			}
 			Console.WriteLine("");
+			Console.ReadLine();
 
 			Console.WriteLine("taal van (bb):");
 			foreach (String o in exp2.getLanguage(5))
@@ -394,6 +396,7 @@ namespace ForGen
 				Console.Write(o + " ");
 			}
 			Console.WriteLine("");
+			Console.ReadLine();
 
 			Console.WriteLine("taal van (baa | bb):");
 			foreach (String o in exp3.getLanguage(5))
@@ -401,6 +404,7 @@ namespace ForGen
 				Console.Write(o + " ");
 			}
 			Console.WriteLine("");
+			Console.ReadLine();
 
 			Console.WriteLine("taal van (a|b)*:");
 			foreach (String o in all.getLanguage(5))
@@ -408,6 +412,7 @@ namespace ForGen
 				Console.Write(o + " ");
 			}
 			Console.WriteLine("");
+			Console.ReadLine();
 
 			Console.WriteLine("taal van (baa | bb)+:");
 			foreach (String o in exp5.getLanguage(5))
@@ -415,6 +420,7 @@ namespace ForGen
 				Console.Write(o + " ");
 			}
 			Console.WriteLine("");
+			Console.ReadLine();
 
 			Console.WriteLine("taal van (baa | bb)+ (a|b)*:");
 			foreach (String o in exp5.getLanguage(6))
@@ -422,6 +428,7 @@ namespace ForGen
 				Console.Write(o + " ");
 			}
 			Console.WriteLine("");
+			Console.ReadLine();
 
 			#endregion
 		}
