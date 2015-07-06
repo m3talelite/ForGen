@@ -171,14 +171,14 @@ namespace ForGen
 		private String exerciseDFAToRegex()
 		{
 			//DFA_FOR_DFA_TO_REGEX
-			String result = "\\section{Omzetten naar regluliere expressie}\nGeef de regex van de onderstaande DFA:\n\n\\includegraphics[width=\\textwidth,height=0.8\\textheight,keepaspectratio] {DFA_FOR_DFA_TO_REGEX}\n\n\\clearpage";
+			String result = "\\section{Omzetten naar regluliere expressie}\nGeef de regex van de onderstaande DFA:\n\n\\includegraphics[width=\\textwidth,height=0.8\\textheight,keepaspectratio] {DFA_FOR_DFA_TO_REGEX}\n\n\\clearpage\n\n";
 			return result;
 		}
 
 		private String exerciseNDFAToRegex()
 		{
 			//NDFA_FOR_NDFA_TO_REGEX
-			String result = "\\section{Omzetten naar regluliere expressie}\nGeef de regex van de onderstaande NDFA:\n\n\\includegraphics[width=\\textwidth,height=0.8\\textheight,keepaspectratio] {NDFA_FOR_NDFA_TO_REGEX}\n\n\\clearpage";
+			String result = "\\section{Omzetten naar regluliere expressie}\nGeef de regex van de onderstaande NDFA:\n\n\\includegraphics[width=\\textwidth,height=0.8\\textheight,keepaspectratio] {NDFA_FOR_NDFA_TO_REGEX}\n\n\\clearpage\n\n";
 			return result;
 		}
 
