@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -9,11 +11,10 @@ namespace ForGen
 {
     class InputOutput
     {
-        public static void WriteObject(String arg)
+        public static void WriteString(String arg)
         {
             String folder = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "/FormeleMethode/";
-            String date = DateTime.Now.ToString("dd-MM-yyyy_hh:mm:ss");
-            String filePath = folder + "/" + date + "ForGenIO.txt";
+            String filePath = folder + "/" + "ForGenIOString.txt";
 
             if (!Directory.Exists(folder))
             {
@@ -32,11 +33,10 @@ namespace ForGen
             }
         }
 
-        public static String ReadObject(String arg)
+        public static String ReadFileAsString()
         {
             String folder = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "/FormeleMethode/";
-            String date = DateTime.Now.ToString("dd-MM-yyyy_hh:mm:ss");
-            String filePath = folder + "/" + date + "ForGenIO.txt";
+            String filePath = folder + "/" + date + "ForGenIOString.txt";
             
             String output = "";
 
@@ -61,6 +61,30 @@ namespace ForGen
                 System.Diagnostics.Debug.WriteLine(ex.Message);
             }
             return output;
+        }
+
+        public static void WriteSerializedObject(object arg)
+        {
+            String folder = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "/FormeleMethode/";
+            String filePath = folder + "/" + "ForGenIOObject.ob";
+
+            IFormatter formatter = new BinaryFormatter();
+            Stream stream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
+            formatter.Serialize(stream, arg);
+            stream.Close();
+        }
+
+        public static object ReadSerializedObject()
+        {
+            String folder = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "/FormeleMethode/";
+            String filePath = folder + "/" + "ForGenIOObject.ob";
+
+            IFormatter formatter = new BinaryFormatter();
+            Stream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            object obj = formatter.Deserialize(stream);
+            stream.Close();
+
+            return obj;
         }
     }
 }
