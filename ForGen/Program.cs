@@ -328,6 +328,7 @@ namespace ForGen
 			Console.Clear();
 			Console.WriteLine("1. Bevat woord");
 			Automata <string> a = new Automata<string>();
+			AutomataConverter c = new AutomataConverter();
 			var ans = Console.ReadLine();
 			int choice=0;
 			if (int.TryParse(ans, out choice))
@@ -337,8 +338,9 @@ namespace ForGen
 					case 1:
 						Console.Clear();
 						Console.WriteLine("De volgende NDFA/DFA is gegenereerd:");
-						a = Tester.generateRandomNdfaDfa();
-						a.printTransitions();
+						a = c.renameStates(Tester.generateRandomNdfa());
+//						a.printTransitions();
+						Tester.generateAutomataImage(a);
 						Console.WriteLine("Geef een string mee en kijk of hij word geaccepteerd. (BV: aaabaabaaa)");
 						var input = Console.ReadLine();
 						if (a.isStringAccepted(input)) {

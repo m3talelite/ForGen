@@ -338,27 +338,42 @@ namespace ForGen
 			}
 
 		}
-		public override string ToString()
+		public string toString(bool parentOr=false)
 		{
 			string result = "";
 			switch (operate) {
 				case Operator.OR:
-					result = left.ToString() + '|' + right.ToString();
+					if (parentOr)
+						result = left.toString(parentOr) + '|' + right.toString(parentOr);
+					else {
+						parentOr = true;
+						result = "(" + left.toString(parentOr) + '|' + right.toString(parentOr) + ")";
+					}
 					break;
 				case Operator.PLUS:
-					result = '('+left.ToString()+')' + '+';
+					if (parentOr)
+						result = left.toString() + '+';
+					else
+						result = '(' + left.toString() + ')' + '+';
 					break;
 				case  Operator.STAR:
-					result = '('+left.ToString()+')' + '*';
+					if (parentOr)
+						result =left.toString() + '*';
+					else
+						result = '(' + left.toString() + ')' + '*';
 					break;
 				case Operator.DOT:
-					result = left.ToString() + right.ToString();
+					result = left.toString(parentOr) + right.toString(parentOr);
 					break;
 				case Operator.ONE:
 					result = terminal;
 					break;
 			}
 			return result;
+		}
+		public override string ToString()
+		{
+			return toString();
 		}
     }
 
