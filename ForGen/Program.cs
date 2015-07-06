@@ -17,9 +17,10 @@ namespace ForGen
 				Environment.NewLine + "2. Reguliere Expressie -> NDFA"+
 				Environment.NewLine + "3. NDFA -> DFA"+
 				Environment.NewLine + "4. Minimalisatie DFA"+
-				Environment.NewLine + "5. Genereer oefententamen"+
-				Environment.NewLine + "6. Woorden generator"+
-				Environment.NewLine + "9. Afsluiten");
+				Environment.NewLine + "5. Woorden generator"+
+				Environment.NewLine + "6. Bevat woord"+
+				Environment.NewLine + "7. Genereer oefententamen"+
+				Environment.NewLine + "0. Afsluiten");
 			var ans = Console.ReadLine();
 			int choice=0;
 			if (int.TryParse(ans, out choice))
@@ -39,12 +40,15 @@ namespace ForGen
 						Minimalization();
 						break;
 					case 5:
-						GenerateTentame();
-						break;
-					case 6:
 						WoordenGenerator();
 						break;
-					case 9:
+					case 6:
+						BevatWoord();
+						break;
+					case 7:
+						GenerateTentame();
+						break;
+					case 0:
 						Console.Clear();
 						Console.WriteLine("( ͡° ͜ʖ ͡°)Tot ziens( ͡° ͜ʖ ͡°)");
 						break;
@@ -103,7 +107,8 @@ namespace ForGen
 		static public void NdfaToDfa(){
 			Console.Clear();
 			Console.WriteLine("1. NDFA -> DFA (zonder Epsilon)" +
-				Environment.NewLine + "2. NDFA -> DFA (met Epsilon)");
+				Environment.NewLine + "2. NDFA -> DFA (met Epsilon)" +
+				Environment.NewLine + "3. NDFA -> DFA (Random NDFA)");
 			var ans = Console.ReadLine();
 
 			AutomataConverter c = new AutomataConverter();
@@ -135,6 +140,18 @@ namespace ForGen
 						Console.ReadLine();
 						c.NDFAToDFA(b).printTransitions();
 						Tester.generateAutomataImage(c.NDFAToDFA(b));
+						ResetToMenu();
+						break;
+					case 3:
+						Console.Clear();
+						Automata<string> d= Tester.generateRandomNdfa();
+						Console.WriteLine("De volgende NDFA:");
+						d.printTransitions();
+						Tester.generateAutomataImage(d);
+						Console.WriteLine("is deze DFA: (Druk op een knop)");
+						Console.ReadLine();
+						c.NDFAToDFA(d).printTransitions();
+						Tester.generateAutomataImage(c.NDFAToDFA(d));
 						ResetToMenu();
 						break;
 					default:
@@ -191,9 +208,11 @@ namespace ForGen
 
 		static public void Minimalization(){
 			Console.Clear();
-			Console.WriteLine("1. Minimalization DFA");
+			Console.WriteLine("1. Minimalization DFA" + 
+			Environment.NewLine + "2. Minimalization Random DFA");
 			var ans = Console.ReadLine();
 			AutomataMinimalization m = new AutomataMinimalization();
+			AutomataConverter c = new AutomataConverter();
 			int choice=0;
 			if (int.TryParse(ans, out choice))
 			{
@@ -210,6 +229,19 @@ namespace ForGen
 						Automata<String> mini = m.Minimization(a);
 						mini.printTransitions();
 						Tester.generateAutomataImage(mini);
+						ResetToMenu();
+						break;
+					case 2:
+						Console.Clear();
+						Automata<string> b = c.renameStates(Tester.generateRandomDfa());
+						Console.WriteLine("De volgende DFA: ");
+						b.printTransitions();
+						Tester.generateAutomataImage(b);
+						Console.WriteLine("Is in Minimalisatie: (druk op een knop)");
+						Console.ReadLine();
+						Automata<String> mini2 = m.Minimization(b);
+						mini2.printTransitions();
+						Tester.generateAutomataImage(mini2);
 						ResetToMenu();
 						break;
 					default:
@@ -275,6 +307,44 @@ namespace ForGen
 					case 2:
 						Console.Clear();
 						Tester.testRegularExpressionThompson2();
+						ResetToMenu();
+						break;
+					default:
+						Console.WriteLine("Deze optie is niet beschikbaar." +
+							Environment.NewLine + "Druk op een knop om terug te gaan");
+						ResetToMenu();
+						break;
+				}
+			}
+			else
+			{
+				Console.WriteLine("Vul alstublieft het nummer van de keuze in."+
+					Environment.NewLine + "Druk op een knop om terug te gaan");
+				ResetToMenu();
+			}
+		}
+
+		static public void BevatWoord(){
+			Console.Clear();
+			Console.WriteLine("1. Bevat woord");
+			Automata <string> a = new Automata<string>();
+			var ans = Console.ReadLine();
+			int choice=0;
+			if (int.TryParse(ans, out choice))
+			{
+				switch (choice)
+				{
+					case 1:
+						Console.Clear();
+						Console.WriteLine("De volgende NDFA/DFA is gegenereerd:");
+						a = Tester.generateRandomNdfaDfa();
+						a.printTransitions();
+						Console.WriteLine("Geef een string mee en kijk of hij word geaccepteerd. (BV: aaabaabaaa)");
+						var input = Console.ReadLine();
+						if (a.isStringAccepted(input)) {
+							Console.WriteLine("De string word geaccepteerd.");
+						}
+						else Console.WriteLine("De string word NIET geaccepteerd.");
 						ResetToMenu();
 						break;
 					default:

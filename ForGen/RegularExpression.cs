@@ -343,7 +343,7 @@ namespace ForGen
 			string result = "";
 			switch (operate) {
 				case Operator.OR:
-					result = '('+left.ToString() + '|' + right.ToString()+')';
+					result = left.ToString() + '|' + right.ToString();
 					break;
 				case Operator.PLUS:
 					result = '('+left.ToString()+')' + '+';
