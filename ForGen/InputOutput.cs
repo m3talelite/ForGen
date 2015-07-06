@@ -36,7 +36,7 @@ namespace ForGen
         public static String ReadFileAsString()
         {
             String folder = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "/FormeleMethode/";
-            String filePath = folder + "/" + date + "ForGenIOString.txt";
+            String filePath = folder + "/" + "ForGenIOString.txt";
             
             String output = "";
 
@@ -66,7 +66,11 @@ namespace ForGen
         public static void WriteSerializedObject(object arg)
         {
             String folder = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "/FormeleMethode/";
-            String filePath = folder + "/" + "ForGenIOObject.ob";
+            String filePath = folder + "/" + "ForGenIOObject.bin";
+			if (!Directory.Exists(folder))
+			{
+				System.IO.Directory.CreateDirectory(folder);
+			}
 
             IFormatter formatter = new BinaryFormatter();
             Stream stream = new FileStream(filePath, FileMode.Create, FileAccess.Write);
@@ -77,7 +81,7 @@ namespace ForGen
         public static object ReadSerializedObject()
         {
             String folder = Environment.GetFolderPath(Environment.SpecialFolder.Personal) + "/FormeleMethode/";
-            String filePath = folder + "/" + "ForGenIOObject.ob";
+            String filePath = folder + "/" + "ForGenIOObject.bin";
 
             IFormatter formatter = new BinaryFormatter();
             Stream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
