@@ -8,8 +8,10 @@ using System.IO;
 
 namespace ForGen
 {
+
 	public class Tester
 	{
+		public static Random r = new Random();
 		public Tester ()
 		{
 		}
@@ -286,7 +288,6 @@ namespace ForGen
 
 		public static RegularExpression generateRandomRegex(char[] alfabet, int depth=5)
 		{
-			Random r = new Random();
 			bool wasmulti = false;
 			RegularExpression begin = new RegularExpression("a");
 			for (int c = 0; c < depth; c++) {
