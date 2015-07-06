@@ -14,7 +14,7 @@ namespace ForGen
         ONE
     }
 
-
+    [Serializable]
     public class RegularExpression
     {
         Operator operate;

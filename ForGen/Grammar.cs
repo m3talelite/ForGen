@@ -1,5 +1,5 @@
 ﻿using System;
-using C5;
+//using C5;
 using System.Collections.Generic;
 
 namespace ForGen
@@ -7,9 +7,9 @@ namespace ForGen
 	public class Grammar<T> where T : IComparable
 	{
 		private T startSymbol;
-		private ArrayList<ProductionRule<T>> productionRules;
+		private List<ProductionRule<T>> productionRules;
 
-		public Grammar (T startSymbol, ArrayList<ProductionRule<T>> productionRules)
+		public Grammar (T startSymbol, List<ProductionRule<T>> productionRules)
 		{
 			this.startSymbol = startSymbol;
 			this.productionRules = productionRules;

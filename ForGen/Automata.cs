@@ -4,10 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.IO;
-using C5;
+//using C5;
 
 namespace ForGen
 {
+    [Serializable]
 	public class Automata<T> where T : IComparable
 	{
 		private List<Transition<T>> transitions;
@@ -137,7 +138,7 @@ namespace ForGen
 		}
 
 		public Grammar<T> getGrammar() {
-			ArrayList<ProductionRule<T>> productionRules = new ArrayList<ProductionRule<T>>();
+			List<ProductionRule<T>> productionRules = new List<ProductionRule<T>>();
 			T startSymbol = startStates.First();
 			foreach (T state in this.getStates()) {
 				foreach (var letter in getAlphabet()) {
