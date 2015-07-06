@@ -19,7 +19,7 @@ If you're using OS X:
   * Graphviz
   * pdflatex (install MacTeX as found on this website http://www.tug.org/mactex/)
 
-(Why an English readme when the application is Dutch? Google/DuckDuckGo/Bing/Yandex, that's why) 
+(Why an English readme when the application is Dutch? Because DuckDuckGo/Bing/Yandex don't speak Dutch, that's why) 
 
 
 
