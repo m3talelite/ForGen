@@ -263,9 +263,12 @@ namespace ForGen
 			int p = (int) Environment.OSVersion.Platform;
 			if (!((p == 4) || (p == 6) || (p == 128))) // If you're using Windows I feel bad for you son, I support 99 OS's and windows ain't one ( ͡° ͜ʖ ͡°)
 				return;  
-			
+			string file_opener = "";
 			string executable = "pdflatex";
-			string file_opener = "xdg-open";
+			if(InputOutput.IsRunningOnMac())
+				file_opener = "open";
+			else
+				file_opener = "xdg-open";
 			bool no_open = false;
 			if (latexLocation == "")
 				no_open = true;

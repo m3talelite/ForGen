@@ -69,10 +69,16 @@ namespace ForGen
             bool windows = false;
 			int p = (int) Environment.OSVersion.Platform;
 			if ((p == 4) || (p == 6) || (p == 128)) { //UNIX
-				if (output_file=="")
+				if (output_file == "")
+				if (InputOutput.IsRunningOnMac())
+					output_file = Path.GetTempPath() + "generatedAutomata." + fileformat;
+				else
 					output_file = "/tmp/tmp."+fileformat;
 				executable_file = "dot";
-				file_opener = "xdg-open";
+				if(InputOutput.IsRunningOnMac())
+					file_opener = "open";
+				else
+					file_opener = "xdg-open";
 			} else {
                 windows = true;
 				if (output_file == "") {

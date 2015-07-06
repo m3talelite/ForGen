@@ -90,5 +90,16 @@ namespace ForGen
 
             return obj;
         }
+
+		public static bool IsRunningOnMac ()
+		{
+			// Hacky solution to an otherwise unsolvable problem :s
+			if (Directory.Exists("/Applications")
+				& Directory.Exists("/System")
+				& Directory.Exists("/Users")
+				& Directory.Exists("/Volumes"))
+				return true;
+			return false;
+		}
     }
 }
