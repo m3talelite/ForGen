@@ -8,6 +8,7 @@ using System.IO;
 
 namespace ForGen
 {
+    [Serializable]
 	public class Automata<T> where T : IComparable
 	{
 		private List<Transition<T>> transitions;

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ForGen
 {
-
+    [Serializable]
 	public class Transition<T> where T : IComparable    
 	{
         public static readonly char EPSILON = '$';
