@@ -20,6 +20,43 @@ namespace ForGen
 			return m.Minimization(automata);
 		}
 
+		static public Automata<String> generateRandomNdfa(){
+			int num = 0; 
+			Automata<String> auto = new Automata<String>();
+			char[] alfabet = { 'a', 'b'};
+			RegularExpression b = Tester.generateRandomRegex(alfabet, 5);
+			Console.WriteLine(b.ToString() +
+				Environment.NewLine + "Geeft:");
+			b.regexToNDFA(ref num, ref auto);
+			return auto;
+		}
+
+		static public Automata<String> generateRandomDfa(){
+			int num = 0; 
+			Automata<String> auto = new Automata<String>();
+			char[] alfabet = { 'a', 'b'};
+			RegularExpression b = Tester.generateRandomRegex(alfabet, 5);
+			Console.WriteLine(b.ToString() +
+				Environment.NewLine + "Geeft:");
+			b.regexToNDFA(ref num, ref auto);
+			AutomataConverter c = new AutomataConverter();
+			Automata<String> auto2 = c.NDFAToDFA(auto);
+			return auto2;
+		}
+
+		static public Automata<String> generateRandomNdfaDfa(){
+			Random random = new Random();
+			int randomNumber = random.Next(0, 10);
+			if (randomNumber < 5) {
+				Console.WriteLine("Creating DFA");
+				return generateRandomDfa();
+			} else {
+			 	Console.WriteLine("Creating NDFA");
+				return generateRandomNdfa();
+			}
+
+		}
+
 		static public void generateAutomataImage(Automata<String> automata, string output_file="", string fileformat="svg")
 		{
 			string executable_file = "";
